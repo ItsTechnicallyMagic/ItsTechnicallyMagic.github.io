@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-aura="violet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>It's Technically Magic — Sanjana Putchala | Analytics & Innovation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07080d;
+      --surface: rgba(17, 19, 28, 0.78);
+      --surface-solid: #11131c;
+      --surface-hover: rgba(26, 30, 44, 0.9);
+      --border: rgba(255, 255, 255, 0.09);
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --text: #f4f6fb;
+      --muted: #98a2b8;
+      --accent: #9b5cff;
+      --accent-2: #22d3ee;
+      --accent-soft: rgba(155, 92, 255, 0.16);
+      --spotlight: rgba(155, 92, 255, 0.16);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    html[data-theme="light"] {
+      --bg: #f6f7fb;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-solid: #ffffff;
+      --surface-hover: #ffffff;
+      --border: rgba(15, 23, 42, 0.09);
+      --border-strong: rgba(15, 23, 42, 0.18);
+      --text: #0f172a;
+      --muted: #475569;
+      --spotlight: rgba(124, 58, 237, 0.11);
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    html[data-aura="mint"] {
+      --accent: #10b981;
+      --accent-2: #06b6d4;
+      --accent-soft: rgba(16, 185, 129, 0.16);
+      --spotlight: rgba(16, 185, 129, 0.16);
+    }
+
+    html[data-aura="coral"] {
+      --accent: #f43f5e;
+      --accent-2: #f59e0b;
+      --accent-soft: rgba(244, 63, 94, 0.16);
+      --spotlight: rgba(244, 63, 94, 0.16);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+
+    /* Ambient Grid & Glow Background */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(to right, var(--border) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 55%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 55%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .bg-orb {
+      position: fixed;
+      top: -180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 820px;
+      height: 440px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+      filter: blur(55px);
+      z-index: -1;
+      pointer-events: none;
+      transition: background 0.4s ease;
+    }
+
+    h1, h2, h3, .font-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -0.025em;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 20px 120px;
+    }
+
+    /* Top Sticky Glass Header */
+    .topbar {
+      position: sticky;
+      top: 14px;
+      z-index: 40;
+      max-width: 1160px;
+      margin: 14px auto 28px;
+      padding: 10px 18px;
+      border-radius: 16px;
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+
+    .brand-spark {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 0.95rem;
+      box-shadow: 0 0 20px var(--accent-soft);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 11px;
+      border-radius: 9px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: var(--accent-soft);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .aura-picker {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.06);
+    }
+
+    .aura-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .aura-dot:hover { transform: scale(1.2); }
+    .aura-dot.active { border-color: var(--text); transform: scale(1.15); }
+    .aura-dot[data-set-aura="violet"] { background: #9b5cff; }
+    .aura-dot[data-set-aura="mint"] { background: #10b981; }
+    .aura-dot[data-set-aura="coral"] { background: #f43f5e; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 13px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.07);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--border-strong);
+      background: var(--accent-soft);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border: none;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.94;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+
+    /* Spotlight Bento Cards */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      position: relative;
+      border-radius: 22px;
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      padding: 26px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), var(--spotlight), transparent 45%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::before { opacity: 1; }
+    .card:hover { border-color: var(--border-strong); }
+
+    .span-8 { grid-column: span 8; }
+    .span-4 { grid-column: span 4; }
+    .span-12 { grid-column: span 12; }
+
+    @media (max-width: 920px) {
+      .span-8, .span-4 { grid-column: span 12; }
+      .nav-links { display: none; }
+    }
+
+    /* Shimmer Pill */
+    .shimmer-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--accent-soft);
+      border: 1px solid var(--border-strong);
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 10px var(--accent-2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.45); opacity: 0.55; }
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      font-weight: 800;
+      line-height: 1.12;
+      margin-bottom: 12px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.02rem;
+      max-width: 62ch;
+      margin-bottom: 20px;
+    }
+
+    .handle-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .copy-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 13px;
+      border-radius: 10px;
+      background: rgba(127, 127, 127, 0.08);
+      border: 1px dashed var(--border-strong);
+      font-size: 0.82rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-pill:hover {
+      background: var(--accent-soft);
+      border-style: solid;
+    }
+
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Magic Radar Card */
+    .radar-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .radar-visual {
+      position: relative;
+      width: 148px;
+      height: 148px;
+      margin: 10px auto 14px;
+      border-radius: 50%;
+      border: 1px solid var(--border-strong);
+      background:
+        radial-gradient(circle, transparent 32%, var(--border) 33%, transparent 34%),
+        radial-gradient(circle, transparent 64%, var(--border) 65%, transparent 66%);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .radar-sweep {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent-soft), transparent 42%);
+      animation: spin 4.5s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .radar-blip {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 12px var(--accent-2);
+      animation: pulse 2.2s infinite;
+    }
+
+    .radar-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .radar-tab {
+      padding: 6px 8px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .radar-tab.active {
+      background: var(--accent-soft);
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    .radar-readout {
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(127, 127, 127, 0.06);
+      border: 1px solid var(--border);
+      font-size: 0.84rem;
+    }
+
+    /* Chaos -> Technically Magic Transformer */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .seg-btn {
+      padding: 7px 13px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .seg-btn.active {
+      background: var(--accent-soft);
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    .morph-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(127, 127, 127, 0.06);
+      border: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .morph-controls input[type="range"] {
+      flex: 1;
+      min-width: 180px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .pipeline-stage {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 720px) {
+      .pipeline-stage { grid-template-columns: 1fr; }
+    }
+
+    .node-box {
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.05);
+      transition: all 0.35s ease;
+    }
+
+    .node-box.magic-active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+    }
+
+    .node-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .metrics-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .metrics-strip { grid-template-columns: 1fr; }
+    }
+
+    .metric-tile {
+      padding: 12px 15px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.04);
+    }
+
+    .metric-val {
+      font-size: 1.35rem;
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* 20-Week Creator Heatmap */
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      gap: 5px;
+      margin: 14px 0;
+    }
+
+    .heat-col {
+      display: grid;
+      grid-template-rows: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    .heat-cell {
+      aspect-ratio: 1 / 1;
+      border-radius: 4px;
+      background: rgba(127, 127, 127, 0.12);
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.25s ease;
+    }
+
+    .heat-cell:hover { transform: scale(1.28); outline: 1px solid var(--text); }
+    .heat-cell[data-lvl="1"] { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+    .heat-cell[data-lvl="2"] { background: color-mix(in srgb, var(--accent) 52%, transparent); }
+    .heat-cell[data-lvl="3"] { background: color-mix(in srgb, var(--accent) 78%, transparent); }
+    .heat-cell[data-lvl="4"] { background: var(--accent-2); }
+
+    /* Open-Source & Content Lab */
+    .lab-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .search-input {
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.07);
+      color: var(--text);
+      font-size: 0.85rem;
+      min-width: 230px;
+      outline: none;
+    }
+
+    .search-input:focus { border-color: var(--accent); }
+
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px;
+    }
+
+    .lab-item {
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .lab-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: var(--accent-soft);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    /* Floating Dock */
+    .dock {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 45;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 18px;
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .dock-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      border: 1px solid transparent;
+      background: rgba(127, 127, 127, 0.08);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .dock-btn:hover {
+      transform: translateY(-5px) scale(1.12);
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .dock-sep {
+      width: 1px;
+      height: 22px;
+      background: var(--border-strong);
+    }
+
+    /* Modals (Inspector, Cmd+K, README) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(3, 5, 10, 0.72);
+      backdrop-filter: blur(8px);
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open { display: grid; }
+
+    .modal-box {
+      width: 100%;
+      max-width: 640px;
+      max-height: 85vh;
+      overflow-y: auto;
+      border-radius: 20px;
+      background: var(--surface-solid);
+      border: 1px solid var(--border-strong);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .code-pre {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.78rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      color: var(--text);
+      margin: 12px 0;
+    }
+
+    .cmd-item {
+      padding: 10px 14px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .cmd-item:hover { background: var(--accent-soft); }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-orb"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-spark">✨</div>
+      <span>It's Technically Magic</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="#hero">Studio</a>
+      <a href="#morpher">Chaos → Magic</a>
+      <a href="#heatmap">Activity</a>
+      <a href="#lab">Content Lab</a>
+    </nav>
+
+    <div class="controls">
+      <div class="aura-picker" title="Switch Accent Aura">
+        <button class="aura-dot active" data-set-aura="violet" aria-label="Violet Spark"></button>
+        <button class="aura-dot" data-set-aura="mint" aria-label="Cyber Mint"></button>
+        <button class="aura-dot" data-set-aura="coral" aria-label="Sassy Coral"></button>
+      </div>
+      <button class="btn" id="themeToggle" title="Toggle Dark/Light Theme">🌗 Theme</button>
+      <button class="btn" id="openCmdBtn" title="Command Palette">⌘K</button>
+      <button class="btn btn-primary" id="openReadmeBtn">GitHub README</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Bento Grid -->
+    <section class="bento-grid" id="hero">
+      <div class="card span-8 spotlight-card">
+        <div class="shimmer-pill">
+          <span class="pulse-dot"></span>
+          <span>Analytics &amp; Innovation Developer • Building in Public</span>
+        </div>
+
+        <h1 class="hero-title">
+          It's <span class="gradient-text">Technically Magic</span>.
+        </h1>
+
+        <p class="hero-sub">
+          Hi, I’m <strong>Sanjana Putchala</strong>. I untangle messy data problems, squash "impossible" bugs, and automate away repetitive busywork—turning reactive firefighting into proactive storytelling.
+        </p>
+
+        <div class="handle-bar">
+          <button class="copy-pill mono" id="copyGitHubHandle">
+            <span>github.com/ItsTechnicallyMagic</span>
+            <span id="copyStatus">📋 Copy</span>
+          </button>
+          <span class="badge mono">YouTube: @ItsTechnically-Magic</span>
+        </div>
+
+        <div class="social-row">
+          <a class="btn btn-primary" href="https://github.com/ItsTechnicallyMagic" target="_blank" rel="noopener">💻 GitHub</a>
+          <a class="btn" href="https://youtube.com/@ItsTechnically-Magic" target="_blank" rel="noopener">▶️ YouTube</a>
+          <a class="btn" href="https://medium.com/@ItsTechnicallyMagic" target="_blank" rel="noopener">✍️ Medium</a>
+          <a class="btn" href="https://www.linkedin.com/in/itstechnicallymagic" target="_blank" rel="noopener">💼 LinkedIn</a>
+        </div>
+      </div>
+
+      <!-- Magic Radar Card -->
+      <div class="card span-4 spotlight-card">
+        <div class="radar-wrap">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <h3 style="font-size:1.05rem;">Magic Radar</h3>
+              <span class="badge mono">ACTIVE SCAN</span>
+            </div>
+            <p style="font-size:0.82rem;color:var(--muted);margin-top:4px;">
+              Deep root-cause discovery &amp; proactive innovation telemetry.
+            </p>
+          </div>
+
+          <div class="radar-visual">
+            <div class="radar-sweep"></div>
+            <div class="radar-blip" style="top:28%;left:64%;"></div>
+            <div class="radar-blip" style="top:66%;left:32%;animation-delay:0.8s;"></div>
+            <span class="mono" style="font-size:0.72rem;z-index:2;font-weight:600;">MAGIC OS</span>
+          </div>
+
+          <div>
+            <div class="radar-tabs">
+              <button class="radar-tab active" data-radar="root">Root-Cause</button>
+              <button class="radar-tab" data-radar="auto">Automation</button>
+              <button class="radar-tab" data-radar="story">Storytelling</button>
+            </div>
+            <div class="radar-readout" id="radarReadout">
+              <strong>Root-Cause Magic:</strong> Tracing tangled semantic dependencies back to clean, single-source logic.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Chaos -> Technically Magic Architecture Morpher -->
+    <section class="card spotlight-card" id="morpher" style="margin-bottom:22px;">
+      <div class="section-header">
+        <div>
+          <h2 style="font-size:1.35rem;">Chaos → Technically Magic Transformer</h2>
+          <p style="font-size:0.86rem;color:var(--muted);">
+            Slide or cast magic to transform reactive data headaches into automated blueprints.
+          </p>
+        </div>
+        <div class="pill-group" id="scenarioTabs">
+          <button class="seg-btn active" data-scenario="0">Tangled Models</button>
+          <button class="seg-btn" data-scenario="1">5-Hr Manual Reporting</button>
+          <button class="seg-btn" data-scenario="2">'Impossible' Bugs</button>
+        </div>
+      </div>
+
+      <div class="morph-controls">
+        <span class="mono" style="font-size:0.8rem;">🔥 Reactive Chaos</span>
+        <input type="range" id="magicSlider" min="0" max="100" value="85" />
+        <span class="mono" style="font-size:0.8rem;">✨ Technically Magic</span>
+        <button class="btn btn-primary" id="castMagicBtn">Cast Magic ✨</button>
+      </div>
+
+      <div class="pipeline-stage" id="pipelineStage"></div>
+
+      <div class="metrics-strip">
+        <div class="metric-tile">
+          <div style="font-size:0.78rem;color:var(--muted);">Architecture Clarity</div>
+          <div class="metric-val gradient-text" id="metricClarity">94%</div>
+        </div>
+        <div class="metric-tile">
+          <div style="font-size:0.78rem;color:var(--muted);">Hours Reclaimed / Week</div>
+          <div class="metric-val" id="metricHours">+11.5 hrs</div>
+        </div>
+        <div class="metric-tile">
+          <div style="font-size:0.78rem;color:var(--muted);">Mode Status</div>
+          <div class="metric-val mono" style="font-size:1rem;padding-top:4px;" id="metricState">PROACTIVE MAGIC</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20-Week Creator & Builder Activity Heatmap -->
+    <section class="card spotlight-card" id="heatmap" style="margin-bottom:22px;">
+      <div class="section-header">
+        <div>
+          <h2 style="font-size:1.25rem;">20-Week Builder &amp; Creator Pulse</h2>
+          <p style="font-size:0.84rem;color:var(--muted);">
+            Hover or tap any block to inspect shipping velocity across code, video, and essays.
+          </p>
+        </div>
+        <div class="pill-group" id="heatFilters">
+          <button class="seg-btn active" data-heat="all">All Activity</button>
+          <button class="seg-btn" data-heat="dev">Dev &amp; Tools</button>
+          <button class="seg-btn" data-heat="video">YouTube</button>
+          <button class="seg-btn" data-heat="writing">Medium</button>
+        </div>
+      </div>
+
+      <div class="heatmap-grid" id="heatmapGrid"></div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:0.82rem;color:var(--muted);">
+        <span id="heatLog">✨ Hover any cell to inspect daily shipping logs.</span>
+        <span class="mono">Less ▢ ▤ ▦ ■ More</span>
+      </div>
+    </section>
+
+    <!-- Open-Source & Content Lab (Auto-Syncs with GitHub API) -->
+    <section class="card spotlight-card" id="lab">
+      <div class="section-header">
+        <div>
+          <h2 style="font-size:1.35rem;">Open-Source &amp; Content Lab</h2>
+          <p style="font-size:0.84rem;color:var(--muted);">
+            Live-synced with <span class="mono">github.com/ItsTechnicallyMagic</span> + featured YouTube &amp; Medium drops.
+          </p>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="badge mono" id="syncBadge">Syncing GitHub...</span>
+          <button class="btn" id="refreshReposBtn" title="Refresh GitHub Repositories">↻ Sync</button>
+        </div>
+      </div>
+
+      <div class="lab-toolbar">
+        <div class="pill-group" id="labFilters">
+          <button class="seg-btn active" data-filter="all">All</button>
+          <button class="seg-btn" data-filter="repo">GitHub Repos</button>
+          <button class="seg-btn" data-filter="video">YouTube</button>
+          <button class="seg-btn" data-filter="article">Medium</button>
+        </div>
+        <input type="search" class="search-input" id="labSearch" placeholder="Search repos, videos, essays..." />
+      </div>
+
+      <div class="lab-grid" id="labGrid"></div>
+    </section>
+  </main>
+
+  <!-- Floating Dock -->
+  <div class="dock">
+    <a class="dock-btn" href="#hero" title="Top / Studio">✨</a>
+    <a class="dock-btn" href="https://github.com/ItsTechnicallyMagic" target="_blank" rel="noopener" title="GitHub">💻</a>
+    <a class="dock-btn" href="https://youtube.com/@ItsTechnically-Magic" target="_blank" rel="noopener" title="YouTube">▶️</a>
+    <a class="dock-btn" href="https://medium.com/@ItsTechnicallyMagic" target="_blank" rel="noopener" title="Medium">✍️</a>
+    <a class="dock-btn" href="https://www.linkedin.com/in/itstechnicallymagic" target="_blank" rel="noopener" title="LinkedIn">💼</a>
+    <div class="dock-sep"></div>
+    <button class="dock-btn" id="dockThemeBtn" title="Toggle Theme">🌗</button>
+    <button class="dock-btn" id="dockCmdBtn" title="Command Palette (⌘K)">⌘</button>
+  </div>
+
+  <!-- Blueprint Inspector Modal -->
+  <div class="modal-backdrop" id="inspectorModal">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span class="badge mono" id="modalType">BLUEPRINT</span>
+        <button class="btn" onclick="closeModal('inspectorModal')">✕ Close</button>
+      </div>
+      <h3 id="modalTitle" style="font-size:1.35rem;margin-bottom:8px;"></h3>
+      <p id="modalDesc" style="color:var(--muted);font-size:0.92rem;margin-bottom:14px;"></p>
+      <div class="radar-readout" id="modalDetails" style="margin-bottom:16px;"></div>
+      <a class="btn btn-primary" id="modalLink" href="#" target="_blank" rel="noopener">Open Resource ↗</a>
+    </div>
+  </div>
+
+  <!-- Command Palette Modal -->
+  <div class="modal-backdrop" id="cmdModal">
+    <div class="modal-box" style="max-width:500px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <strong class="mono" style="font-size:0.82rem;">COMMAND PALETTE</strong>
+        <button class="btn" onclick="closeModal('cmdModal')">ESC</button>
+      </div>
+      <div id="cmdList">
+        <div class="cmd-item" onclick="toggleTheme(); closeModal('cmdModal')"><span>🌗 Toggle Dark / Light Mode</span><span class="mono">Theme</span></div>
+        <div class="cmd-item" onclick="setAura('violet'); closeModal('cmdModal')"><span>🔮 Switch Aura: Violet Spark</span><span class="mono">Aura</span></div>
+        <div class="cmd-item" onclick="setAura('mint'); closeModal('cmdModal')"><span>🌿 Switch Aura: Cyber Mint</span><span class="mono">Aura</span></div>
+        <div class="cmd-item" onclick="setAura('coral'); closeModal('cmdModal')"><span>🔥 Switch Aura: Sassy Coral</span><span class="mono">Aura</span></div>
+        <div class="cmd-item" onclick="window.open('https://github.com/ItsTechnicallyMagic','_blank')"><span>💻 Open GitHub (@ItsTechnicallyMagic)</span><span class="mono">↗</span></div>
+        <div class="cmd-item" onclick="window.open('https://youtube.com/@ItsTechnically-Magic','_blank')"><span>▶️ Open YouTube (@ItsTechnically-Magic)</span><span class="mono">↗</span></div>
+        <div class="cmd-item" onclick="window.open('https://medium.com/@ItsTechnicallyMagic','_blank')"><span>✍️ Open Medium (@ItsTechnicallyMagic)</span><span class="mono">↗</span></div>
+        <div class="cmd-item" onclick="window.open('https://www.linkedin.com/in/itstechnicallymagic','_blank')"><span>💼 Open LinkedIn</span><span class="mono">↗</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GitHub README Modal -->
+  <div class="modal-backdrop" id="readmeModal">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <h3>GitHub Profile README.md</h3>
+        <button class="btn" onclick="closeModal('readmeModal')">✕</button>
+      </div>
+      <p style="font-size:0.85rem;color:var(--muted);">
+        Paste this into <strong>ItsTechnicallyMagic/ItsTechnicallyMagic/README.md</strong>. It automatically adapts to Dark and Light mode on GitHub!
+      </p>
+      <pre class="code-pre mono" id="readmeCode"></pre>
+      <button class="btn btn-primary" id="copyReadmeBtn">📋 Copy Markdown</button>
+    </div>
+  </div>
+
+  <script>
+    // 1. Spotlight Cursor Tracking
+    document.querySelectorAll('.spotlight-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    // 2. Theme & Aura Switchers
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    }
+
+    function setAura(aura) {
+      document.documentElement.setAttribute('data-aura', aura);
+      document.querySelectorAll('.aura-dot').forEach(dot => {
+        dot.classList.toggle('active', dot.dataset.setAura === aura);
+      });
+    }
+
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    document.getElementById('dockThemeBtn').addEventListener('click', toggleTheme);
+    document.querySelectorAll('.aura-dot').forEach(dot => {
+      dot.addEventListener('click', () => setAura(dot.dataset.setAura));
+    });
+
+    // Copy Handle
+    document.getElementById('copyGitHubHandle').addEventListener('click', () => {
+      navigator.clipboard.writeText('https://github.com/ItsTechnicallyMagic');
+      const status = document.getElementById('copyStatus');
+      status.textContent = '✅ Copied!';
+      setTimeout(() => (status.textContent = '📋 Copy'), 1800);
+    });
+
+    // 3. Magic Radar Modes
+    const radarModes = {
+      root: '<strong>Root-Cause Magic:</strong> Tracing tangled semantic dependencies back to clean, single-source logic.',
+      auto: '<strong>Workflow Automation:</strong> Turning 5-hour repetitive manual tasks into one-click repeatable scripts.',
+      story: '<strong>Proactive Storytelling:</strong> Designing intuitive data experiences that answer questions before they are asked.'
+    };
+
+    document.querySelectorAll('.radar-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.radar-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('radarReadout').innerHTML = radarModes[tab.dataset.radar];
+      });
+    });
+
+    // 4. Chaos -> Technically Magic Morpher
+    const scenarios = [
+      {
+        chaos: [
+          { tag: '01 • Bottleneck', title: 'Spaghetti Logic', desc: 'Duplicated measures and fragile ad-hoc overrides across files.' },
+          { tag: '02 • Friction', title: 'Manual Hunting', desc: 'Hours lost clicking through nested folders to find broken links.' },
+          { tag: '03 • Symptom', title: 'Reactive Firefighting', desc: 'Fixing yesterday’s numbers right before leadership reviews.' }
+        ],
+        magic: [
+          { tag: '01 • Foundation', title: 'Clean Semantic Core', desc: 'Modular, version-controlled definitions with zero duplication.' },
+          { tag: '02 • Acceleration', title: 'Automated Decoding', desc: 'Instant structural inspection and dependency mapping.' },
+          { tag: '03 • Outcome', title: 'Proactive Clarity', desc: 'Trusted answers delivered automatically before anyone asks.' }
+        ],
+        hours: '+11.5 hrs'
+      },
+      {
+        chaos: [
+          { tag: '01 • Input', title: 'CSV Copy-Paste Loop', desc: 'Exporting raw extracts every Monday morning by hand.' },
+          { tag: '02 • Transform', title: 'Fragile Manual Edits', desc: 'One stray column shift breaks downstream summaries.' },
+          { tag: '03 • Delivery', title: 'Static Screenshots', desc: 'Outdated numbers pasted into slide decks.' }
+        ],
+        magic: [
+          { tag: '01 • Ingestion', title: 'Automated Pipeline', desc: 'Scheduled validation checks catch schema drift immediately.' },
+          { tag: '02 • Engine', title: 'Zero-Touch Scripts', desc: 'Repeatable transformations run cleanly in seconds.' },
+          { tag: '03 • Experience', title: 'Live Interactive Story', desc: 'Self-serve insights always ready for decision-makers.' }
+        ],
+        hours: '+8.0 hrs'
+      },
+      {
+        chaos: [
+          { tag: '01 • Error', title: 'Cryptic Failure Logs', desc: 'Opaque error messages with zero lineage context.' },
+          { tag: '02 • Guesswork', title: 'Trial-and-Error Fixes', desc: 'Patching symptoms without isolating root causes.' },
+          { tag: '03 • Risk', title: 'Regression Surprises', desc: 'Fixing one view accidentally breaks three others.' }
+        ],
+        magic: [
+          { tag: '01 • Diagnostics', title: 'Magic Radar Trace', desc: 'Pinpoints exact root-cause anomalies in minutes.' },
+          { tag: '02 • Guardrails', title: 'Automated Regression Tests', desc: 'Diff-checks verify every change prior to release.' },
+          { tag: '03 • Confidence', title: 'Predictable Releases', desc: 'Ship fast with clean documentation and peace of mind.' }
+        ],
+        hours: '+14.0 hrs'
+      }
+    ];
+
+    let activeScenario = 0;
+
+    function renderMorpher() {
+      const val = Number(document.getElementById('magicSlider').value);
+      const isMagic = val >= 50;
+      const sc = scenarios[activeScenario];
+      const nodes = isMagic ? sc.magic : sc.chaos;
+
+      document.getElementById('pipelineStage').innerHTML = nodes.map(n => `
+        <div class="node-box ${isMagic ? 'magic-active' : ''}">
+          <div class="node-tag mono">${n.tag}</div>
+          <h4 style="margin-bottom:6px;font-size:1rem;">${isMagic ? '✨ ' : '🔥 '}${n.title}</h4>
+          <p style="font-size:0.84rem;color:var(--muted);">${n.desc}</p>
+        </div>
+      `).join('');
+
+      document.getElementById('metricClarity').textContent = `${Math.round(18 + val * 0.8)}%`;
+      document.getElementById('metricHours').textContent = isMagic ? sc.hours : '+0.0 hrs';
+      document.getElementById('metricState').textContent = isMagic ? 'TECHNICALLY MAGIC' : 'REACTIVE CHAOS';
+    }
+
+    document.getElementById('magicSlider').addEventListener('input', renderMorpher);
+    document.getElementById('castMagicBtn').addEventListener('click', () => {
+      const slider = document.getElementById('magicSlider');
+      slider.value = Number(slider.value) >= 50 ? 15 : 100;
+      renderMorpher();
+    });
+
+    document.querySelectorAll('#scenarioTabs .seg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#scenarioTabs .seg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeScenario = Number(btn.dataset.scenario);
+        renderMorpher();
+      });
+    });
+    renderMorpher();
+
+    // 5. 20-Week Heatmap
+    function renderHeatmap(filter = 'all') {
+      const grid = document.getElementById('heatmapGrid');
+      const labels = {
+        dev: 'Shipped utility commit & automated test suite',
+        video: 'Published YouTube deep-dive on @ItsTechnically-Magic',
+        writing: 'Drafted analytics architecture essay on Medium'
+      };
+      const types = ['dev', 'video', 'writing'];
+      let html = '';
+
+      for (let w = 0; w < 20; w++) {
+        html += '<div class="heat-col">';
+        for (let d = 0; d < 7; d++) {
+          const seed = (w * 7 + d * 13) % 5;
+          const type = types[(w + d) % 3];
+          const lvl = filter !== 'all' && filter !== type ? 0 : seed;
+          const msg = lvl === 0 ? 'Rest & recharge day' : `${labels[type]} (Week ${w + 1}, Day ${d + 1})`;
+          html += `<div class="heat-cell" data-lvl="${lvl}" data-msg="${msg}"></div>`;
+        }
+        html += '</div>';
+      }
+      grid.innerHTML = html;
+
+      grid.querySelectorAll('.heat-cell').forEach(cell => {
+        cell.addEventListener('mouseenter', () => {
+          document.getElementById('heatLog').textContent = `✨ ${cell.dataset.msg}`;
+        });
+      });
+    }
+
+    document.querySelectorAll('#heatFilters .seg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#heatFilters .seg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderHeatmap(btn.dataset.heat);
+      });
+    });
+    renderHeatmap();
+
+    // 6. Open-Source & Content Lab (Live GitHub API + Curated Content)
+    const curatedContent = [
+      {
+        type: 'video',
+        badge: 'YouTube • @ItsTechnically-Magic',
+        title: 'From Reactive Debugging to Proactive Data Storytelling',
+        desc: 'How to spot root causes fast and build clean data workflows that stay ahead of daily business questions.',
+        details: 'Featured walkthrough on @ItsTechnically-Magic covering root-cause debugging frameworks and repeatable automation habits.',
+        url: 'https://youtube.com/@ItsTechnically-Magic'
+      },
+      {
+        type: 'article',
+        badge: 'Medium • @ItsTechnicallyMagic',
+        title: 'Why Analytics & Innovation Needs Less Busywork and Better Tooling',
+        desc: 'Moving beyond cookie-cutter templates to engineer resilient, scalable solutions.',
+        details: 'Deep-dive essay exploring practical engineering patterns for modern analytics & innovation teams.',
+        url: 'https://medium.com/@ItsTechnicallyMagic'
+      }
+    ];
+
+    let liveRepos = [];
+    let currentFilter = 'all';
+
+    async function fetchGitHubRepos() {
+      const badge = document.getElementById('syncBadge');
+      badge.textContent = 'Syncing GitHub...';
+      try {
+        const res = await fetch('https://api.github.com/users/ItsTechnicallyMagic/repos?sort=updated&per_page=12');
+        if (!res.ok) throw new Error('GitHub API limit or not found yet');
+        const data = await res.json();
+        liveRepos = data
+          .filter(r => r.name.toLowerCase() !== 'itstechnicallymagic')
+          .map(r => ({
+            type: 'repo',
+            badge: `GitHub • ${r.language || 'Open Source'}`,
+            title: r.name,
+            desc: r.description || 'Open-source tool & innovation experiment by @ItsTechnicallyMagic.',
+            details: `Stars: ${r.stargazers_count} • Forks: ${r.forks_count} • Last updated: ${new Date(r.updated_at).toLocaleDateString()}`,
+            url: r.html_url
+          }));
+        badge.textContent = `Live Synced (${liveRepos.length} Repos)`;
+      } catch (err) {
+        liveRepos = [
+          {
+            type: 'repo',
+            badge: 'GitHub • Featured Repo',
+            title: 'PBIP-Decoder',
+            desc: 'Utility for inspecting, decoding, and streamlining project metadata structures.',
+            details: 'Open-source repository under github.com/ItsTechnicallyMagic.',
+            url: 'https://github.com/ItsTechnicallyMagic'
+          },
+          {
+            type: 'repo',
+            badge: 'GitHub • Featured Repo',
+            title: 'PowerBI-migration-toolkit',
+            desc: 'Automation helpers designed to eliminate repetitive manual migration steps.',
+            details: 'Open-source repository under github.com/ItsTechnicallyMagic.',
+            url: 'https://github.com/ItsTechnicallyMagic'
+          }
+        ];
+        badge.textContent = 'GitHub Connected';
+      }
+      renderLab();
+    }
+
+    function renderLab() {
+      const query = document.getElementById('labSearch').value.toLowerCase();
+      const items = [...liveRepos, ...curatedContent].filter(item => {
+        const matchesType = currentFilter === 'all' || item.type === currentFilter;
+        const matchesQuery =
+          item.title.toLowerCase().includes(query) ||
+          item.desc.toLowerCase().includes(query) ||
+          item.badge.toLowerCase().includes(query);
+        return matchesType && matchesQuery;
+      });
+
+      const grid = document.getElementById('labGrid');
+      if (!items.length) {
+        grid.innerHTML = `<p style="color:var(--muted);font-size:0.9rem;">No matching items found. Try clearing your filter!</p>`;
+        return;
+      }
+
+      grid.innerHTML = items.map((item, idx) => `
+        <article class="lab-item" data-idx="${idx}">
+          <div>
+            <span class="badge mono" style="margin-bottom:10px;">${item.badge}</span>
+            <h3 style="font-size:1.08rem;margin-bottom:6px;">${item.title}</h3>
+            <p style="font-size:0.85rem;color:var(--muted);">${item.desc}</p>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;font-weight:600;">
+            <span>Inspect Blueprint</span>
+            <span>↗</span>
+          </div>
+        </article>
+      `).join('');
+
+      grid.querySelectorAll('.lab-item').forEach((el, idx) => {
+        el.addEventListener('click', () => {
+          const item = items[idx];
+          document.getElementById('modalType').textContent = item.badge;
+          document.getElementById('modalTitle').textContent = item.title;
+          document.getElementById('modalDesc').textContent = item.desc;
+          document.getElementById('modalDetails').textContent = item.details;
+          document.getElementById('modalLink').href = item.url;
+          openModal('inspectorModal');
+        });
+      });
+    }
+
+    document.querySelectorAll('#labFilters .seg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#labFilters .seg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderLab();
+      });
+    });
+
+    document.getElementById('labSearch').addEventListener('input', renderLab);
+    document.getElementById('refreshReposBtn').addEventListener('click', fetchGitHubRepos);
+    fetchGitHubRepos();
+
+    // 7. Modals & Keyboard Shortcuts
+    function openModal(id) { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+    document.getElementById('openCmdBtn').addEventListener('click', () => openModal('cmdModal'));
+    document.getElementById('dockCmdBtn').addEventListener('click', () => openModal('cmdModal'));
+
+    const readmeMarkdown = `<div align="center">
+  <h1>✨ It's Technically Magic</h1>
+  <p><strong>Sanjana Putchala</strong> • Analytics & Innovation Developer</p>
+  <p>
+    <a href="https://itstechnicallymagic.github.io">Interactive Website</a> •
+    <a href="https://youtube.com/@ItsTechnically-Magic">YouTube</a> •
+    <a href="https://medium.com/@ItsTechnicallyMagic">Medium</a> •
+    <a href="https://www.linkedin.com/in/itstechnicallymagic">LinkedIn</a>
+  </p>
+</div>
+
+Turning messy data problems into smart solutions, automations & proactive storytelling.`;
+
+    document.getElementById('readmeCode').textContent = readmeMarkdown;
+    document.getElementById('openReadmeBtn').addEventListener('click', () => openModal('readmeModal'));
+    document.getElementById('copyReadmeBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(readmeMarkdown);
+      document.getElementById('copyReadmeBtn').textContent = '✅ Copied!';
+      setTimeout(() => (document.getElementById('copyReadmeBtn').textContent = '📋 Copy Markdown'), 1800);
+    });
+
+    document.querySelectorAll('.modal-backdrop').forEach(bg => {
+      bg.addEventListener('click', e => {
+        if (e.target === bg) bg.classList.remove('open');
+      });
+    });
+
+    window.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openModal('cmdModal');
+      } else if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('open'));
+      }
+    });
+  </script>
+</body>
+</html>
