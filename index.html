@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-aura="violet">
+<html lang="en" data-theme="light" data-aura="violet">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,61 +9,63 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #07080d;
-      --surface: rgba(17, 19, 28, 0.78);
-      --surface-solid: #11131c;
-      --surface-hover: rgba(26, 30, 44, 0.9);
+      --bg: #faf9fc;
+      --surface: rgba(255, 255, 255, 0.88);
+      --surface-solid: #ffffff;
+      --border: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(15, 23, 42, 0.16);
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #7c3aed;
+      --accent-2: #0891b2;
+      --accent-soft: rgba(124, 58, 237, 0.10);
+      --spotlight: rgba(124, 58, 237, 0.09);
+      --shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
+    }
+
+    html[data-theme="dark"] {
+      --bg: #08090f;
+      --surface: rgba(17, 20, 30, 0.82);
+      --surface-solid: #121520;
       --border: rgba(255, 255, 255, 0.09);
       --border-strong: rgba(255, 255, 255, 0.18);
-      --text: #f4f6fb;
-      --muted: #98a2b8;
+      --text: #f8fafc;
+      --muted: #94a3b8;
       --accent: #9b5cff;
       --accent-2: #22d3ee;
       --accent-soft: rgba(155, 92, 255, 0.16);
-      --spotlight: rgba(155, 92, 255, 0.16);
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      --spotlight: rgba(155, 92, 255, 0.15);
+      --shadow: 0 22px 52px rgba(0, 0, 0, 0.48);
     }
 
-    html[data-theme="light"] {
-      --bg: #f6f7fb;
-      --surface: rgba(255, 255, 255, 0.85);
-      --surface-solid: #ffffff;
-      --surface-hover: #ffffff;
-      --border: rgba(15, 23, 42, 0.09);
-      --border-strong: rgba(15, 23, 42, 0.18);
-      --text: #0f172a;
-      --muted: #475569;
-      --spotlight: rgba(124, 58, 237, 0.11);
-      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-    }
-
-    html[data-aura="mint"] {
-      --accent: #10b981;
-      --accent-2: #06b6d4;
-      --accent-soft: rgba(16, 185, 129, 0.16);
-      --spotlight: rgba(16, 185, 129, 0.16);
+    html[data-aura="teal"] {
+      --accent: #0d9488;
+      --accent-2: #0284c7;
+      --accent-soft: rgba(13, 148, 136, 0.12);
+      --spotlight: rgba(13, 148, 136, 0.11);
     }
 
     html[data-aura="coral"] {
-      --accent: #f43f5e;
-      --accent-2: #f59e0b;
-      --accent-soft: rgba(244, 63, 94, 0.16);
-      --spotlight: rgba(244, 63, 94, 0.16);
+      --accent: #e11d48;
+      --accent-2: #d97706;
+      --accent-soft: rgba(225, 29, 72, 0.11);
+      --spotlight: rgba(225, 29, 72, 0.10);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.62;
       min-height: 100vh;
       overflow-x: hidden;
       transition: background-color 0.35s ease, color 0.35s ease;
     }
 
-    /* Ambient Grid & Glow Background */
     .bg-grid {
       position: fixed;
       inset: 0;
@@ -71,28 +73,27 @@
       background-image:
         linear-gradient(to right, var(--border) 1px, transparent 1px),
         linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 55%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 55%, transparent 100%);
+      background-size: 52px 52px;
+      mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 50%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 50%, transparent 100%);
       pointer-events: none;
     }
 
     .bg-orb {
       position: fixed;
-      top: -180px;
+      top: -190px;
       left: 50%;
       transform: translateX(-50%);
-      width: 820px;
+      width: 860px;
       height: 440px;
       border-radius: 50%;
       background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
       filter: blur(55px);
       z-index: -1;
       pointer-events: none;
-      transition: background 0.4s ease;
     }
 
-    h1, h2, h3, .font-display {
+    h1, h2, h3, h4, .font-display {
       font-family: 'Plus Jakarta Sans', sans-serif;
       letter-spacing: -0.025em;
     }
@@ -100,18 +101,18 @@
     .mono { font-family: 'JetBrains Mono', monospace; }
 
     .container {
-      max-width: 1160px;
+      max-width: 1140px;
       margin: 0 auto;
       padding: 0 20px 120px;
     }
 
-    /* Top Sticky Glass Header */
+    /* Sticky Topbar */
     .topbar {
       position: sticky;
       top: 14px;
       z-index: 40;
-      max-width: 1160px;
-      margin: 14px auto 28px;
+      max-width: 1140px;
+      margin: 14px auto 34px;
       padding: 10px 18px;
       border-radius: 16px;
       background: var(--surface);
@@ -131,7 +132,7 @@
       align-items: center;
       gap: 10px;
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
     }
 
     .brand-spark {
@@ -142,22 +143,21 @@
       display: grid;
       place-items: center;
       color: #fff;
-      font-size: 0.95rem;
-      box-shadow: 0 0 20px var(--accent-soft);
+      font-size: 0.92rem;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
     }
 
     .nav-links a {
       text-decoration: none;
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 500;
-      padding: 6px 11px;
+      padding: 6px 10px;
       border-radius: 9px;
       transition: all 0.2s ease;
     }
@@ -180,32 +180,32 @@
       padding: 5px 9px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: rgba(127, 127, 127, 0.06);
+      background: rgba(127, 127, 127, 0.05);
     }
 
     .aura-dot {
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
       border: 2px solid transparent;
       cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s ease;
     }
 
     .aura-dot:hover { transform: scale(1.2); }
     .aura-dot.active { border-color: var(--text); transform: scale(1.15); }
-    .aura-dot[data-set-aura="violet"] { background: #9b5cff; }
-    .aura-dot[data-set-aura="mint"] { background: #10b981; }
-    .aura-dot[data-set-aura="coral"] { background: #f43f5e; }
+    .aura-dot[data-set-aura="violet"] { background: #7c3aed; }
+    .aura-dot[data-set-aura="teal"] { background: #0d9488; }
+    .aura-dot[data-set-aura="coral"] { background: #e11d48; }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       padding: 7px 13px;
       border-radius: 10px;
       border: 1px solid var(--border);
-      background: rgba(127, 127, 127, 0.07);
+      background: rgba(127, 127, 127, 0.05);
       color: var(--text);
       font-size: 0.82rem;
       font-weight: 500;
@@ -232,14 +232,7 @@
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
     }
 
-    /* Spotlight Bento Cards */
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
-      margin-bottom: 22px;
-    }
-
+    /* Cards & Layout */
     .card {
       position: relative;
       border-radius: 22px;
@@ -247,17 +240,18 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border);
-      padding: 26px;
+      padding: 28px;
       box-shadow: var(--shadow);
-      overflow: hidden;
-      transition: transform 0.25s ease, border-color 0.25s ease;
+      margin-bottom: 24px;
+      transition: border-color 0.25s ease, transform 0.25s ease;
     }
 
     .card::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), var(--spotlight), transparent 45%);
+      border-radius: 22px;
+      background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 50%), var(--spotlight), transparent 45%);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
@@ -266,17 +260,23 @@
     .card:hover::before { opacity: 1; }
     .card:hover { border-color: var(--border-strong); }
 
-    .span-8 { grid-column: span 8; }
-    .span-4 { grid-column: span 4; }
-    .span-12 { grid-column: span 12; }
-
-    @media (max-width: 920px) {
-      .span-8, .span-4 { grid-column: span 12; }
+    @media (max-width: 900px) {
       .nav-links { display: none; }
     }
 
-    /* Shimmer Pill */
-    .shimmer-pill {
+    /* Hero Section */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+
+    .status-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -286,8 +286,7 @@
       font-weight: 600;
       background: var(--accent-soft);
       border: 1px solid var(--border-strong);
-      color: var(--text);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .pulse-dot {
@@ -295,7 +294,6 @@
       height: 8px;
       border-radius: 50%;
       background: var(--accent-2);
-      box-shadow: 0 0 10px var(--accent-2);
       animation: pulse 2s infinite;
     }
 
@@ -304,11 +302,17 @@
       50% { transform: scale(1.45); opacity: 0.55; }
     }
 
-    .hero-title {
-      font-size: clamp(2rem, 4vw, 3.1rem);
+    .hero-name {
+      font-size: clamp(2.1rem, 4vw, 3.1rem);
       font-weight: 800;
-      line-height: 1.12;
-      margin-bottom: 12px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .hero-role {
+      font-size: 1.12rem;
+      font-weight: 600;
+      margin-bottom: 14px;
     }
 
     .gradient-text {
@@ -317,38 +321,11 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .hero-sub {
+    .hero-bio {
       color: var(--muted);
-      font-size: 1.02rem;
-      max-width: 62ch;
+      font-size: 0.98rem;
       margin-bottom: 20px;
-    }
-
-    .handle-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .copy-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 13px;
-      border-radius: 10px;
-      background: rgba(127, 127, 127, 0.08);
-      border: 1px dashed var(--border-strong);
-      font-size: 0.82rem;
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .copy-pill:hover {
-      background: var(--accent-soft);
-      border-style: solid;
+      max-width: 60ch;
     }
 
     .social-row {
@@ -357,105 +334,123 @@
       gap: 10px;
     }
 
-    /* Magic Radar Card */
-    .radar-wrap {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-    }
-
-    .radar-visual {
-      position: relative;
-      width: 148px;
-      height: 148px;
-      margin: 10px auto 14px;
-      border-radius: 50%;
-      border: 1px solid var(--border-strong);
-      background:
-        radial-gradient(circle, transparent 32%, var(--border) 33%, transparent 34%),
-        radial-gradient(circle, transparent 64%, var(--border) 65%, transparent 66%);
+    .wins-grid {
       display: grid;
-      place-items: center;
-      overflow: hidden;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
 
-    .radar-sweep {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: conic-gradient(from 0deg, var(--accent-soft), transparent 42%);
-      animation: spin 4.5s linear infinite;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .radar-blip {
-      position: absolute;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--accent-2);
-      box-shadow: 0 0 12px var(--accent-2);
-      animation: pulse 2.2s infinite;
-    }
-
-    .radar-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .radar-tab {
-      padding: 6px 8px;
-      border-radius: 9px;
+    .win-tile {
+      padding: 16px;
+      border-radius: 16px;
       border: 1px solid var(--border);
-      background: transparent;
+      background: rgba(127, 127, 127, 0.04);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .win-tile:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .win-num {
+      font-size: 1.55rem;
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.15;
+      margin-bottom: 4px;
+    }
+
+    .win-label {
+      font-size: 0.78rem;
       color: var(--muted);
-      font-size: 0.74rem;
-      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    /* Section Headers */
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-title { font-size: 1.38rem; font-weight: 800; }
+    .section-sub { font-size: 0.88rem; color: var(--muted); }
+
+    /* Interactive Skills Matrix */
+    .skills-pillars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 760px) {
+      .skills-pillars { grid-template-columns: 1fr; }
+    }
+
+    .pillar-box {
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.03);
+    }
+
+    .pillar-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chip-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .skill-chip {
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-solid);
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    .radar-tab.active {
-      background: var(--accent-soft);
-      color: var(--text);
+    .skill-chip:hover {
       border-color: var(--accent);
+      transform: translateY(-1px);
     }
 
-    .radar-readout {
-      padding: 12px;
-      border-radius: 12px;
-      background: rgba(127, 127, 127, 0.06);
-      border: 1px solid var(--border);
-      font-size: 0.84rem;
+    .skill-chip.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border-color: transparent;
+      font-weight: 600;
     }
 
-    /* Chaos -> Technically Magic Transformer */
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
+    /* Spotlight Case Studies */
     .pill-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 7px;
     }
 
     .seg-btn {
-      padding: 7px 13px;
-      border-radius: 10px;
+      padding: 6px 12px;
+      border-radius: 9px;
       border: 1px solid var(--border);
       background: transparent;
       color: var(--muted);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -465,157 +460,37 @@
       background: var(--accent-soft);
       color: var(--text);
       border-color: var(--accent);
+      font-weight: 600;
     }
 
-    .morph-controls {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: rgba(127, 127, 127, 0.06);
-      border: 1px solid var(--border);
-      margin-bottom: 18px;
-    }
-
-    .morph-controls input[type="range"] {
-      flex: 1;
-      min-width: 180px;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-
-    .pipeline-stage {
+    .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    @media (max-width: 720px) {
-      .pipeline-stage { grid-template-columns: 1fr; }
-    }
-
-    .node-box {
-      padding: 16px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(127, 127, 127, 0.05);
-      transition: all 0.35s ease;
-    }
-
-    .node-box.magic-active {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
-    }
-
-    .node-tag {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .metrics-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    @media (max-width: 640px) {
-      .metrics-strip { grid-template-columns: 1fr; }
-    }
-
-    .metric-tile {
-      padding: 12px 15px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(127, 127, 127, 0.04);
-    }
-
-    .metric-val {
-      font-size: 1.35rem;
-      font-weight: 800;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    /* 20-Week Creator Heatmap */
-    .heatmap-grid {
-      display: grid;
-      grid-template-columns: repeat(20, 1fr);
-      gap: 5px;
-      margin: 14px 0;
-    }
-
-    .heat-col {
-      display: grid;
-      grid-template-rows: repeat(7, 1fr);
-      gap: 5px;
-    }
-
-    .heat-cell {
-      aspect-ratio: 1 / 1;
-      border-radius: 4px;
-      background: rgba(127, 127, 127, 0.12);
-      cursor: pointer;
-      transition: transform 0.15s ease, background-color 0.25s ease;
-    }
-
-    .heat-cell:hover { transform: scale(1.28); outline: 1px solid var(--text); }
-    .heat-cell[data-lvl="1"] { background: color-mix(in srgb, var(--accent) 28%, transparent); }
-    .heat-cell[data-lvl="2"] { background: color-mix(in srgb, var(--accent) 52%, transparent); }
-    .heat-cell[data-lvl="3"] { background: color-mix(in srgb, var(--accent) 78%, transparent); }
-    .heat-cell[data-lvl="4"] { background: var(--accent-2); }
-
-    /* Open-Source & Content Lab */
-    .lab-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .search-input {
-      padding: 8px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: rgba(127, 127, 127, 0.07);
-      color: var(--text);
-      font-size: 0.85rem;
-      min-width: 230px;
-      outline: none;
-    }
-
-    .search-input:focus { border-color: var(--accent); }
-
-    .lab-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
       gap: 16px;
     }
 
-    .lab-item {
-      padding: 18px;
-      border-radius: 16px;
+    .project-card {
+      padding: 20px;
+      border-radius: 18px;
       border: 1px solid var(--border);
-      background: rgba(127, 127, 127, 0.04);
+      background: rgba(127, 127, 127, 0.03);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
       cursor: pointer;
       transition: all 0.22s ease;
     }
 
-    .lab-item:hover {
+    .project-card:hover {
       transform: translateY(-3px);
       border-color: var(--accent);
       background: var(--accent-soft);
+    }
+
+    .project-card.highlighted {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
     }
 
     .badge {
@@ -629,18 +504,204 @@
       border: 1px solid var(--border);
     }
 
+    .pmi-mini {
+      font-size: 0.8rem;
+      padding: 10px 12px;
+      border-radius: 11px;
+      background: rgba(127, 127, 127, 0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* Problem -> Magic -> Impact Transformer */
+    .morph-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 13px 16px;
+      border-radius: 14px;
+      background: rgba(127, 127, 127, 0.04);
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .morph-bar input[type="range"] {
+      flex: 1;
+      min-width: 170px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 740px) {
+      .pipeline-grid { grid-template-columns: 1fr; }
+    }
+
+    .node-card {
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.03);
+      transition: all 0.3s ease;
+    }
+
+    .node-card.magic-on {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* Experience Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .role-item {
+      padding: 18px 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.03);
+      transition: border-color 0.2s ease;
+    }
+
+    .role-item:hover { border-color: var(--border-strong); }
+
+    .role-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .role-bullets {
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .creds-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cred-box {
+      padding: 13px 15px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.03);
+      font-size: 0.83rem;
+    }
+
+    /* =========================================================
+       MINI-SANJANA INTERACTIVE CHARACTER COMPANION
+       ========================================================= */
+    .mini-sanjana-stage {
+      position: fixed;
+      bottom: 72px;
+      left: 28px;
+      z-index: 42;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      pointer-events: none;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .sanjana-bubble {
+      pointer-events: auto;
+      max-width: 245px;
+      padding: 8px 13px;
+      border-radius: 14px 14px 14px 4px;
+      background: var(--surface-solid);
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow);
+      font-size: 0.77rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+      margin-left: 18px;
+      position: relative;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .sanjana-avatar-btn {
+      pointer-events: auto;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      width: 68px;
+      height: 82px;
+      display: grid;
+      place-items: center;
+      filter: drop-shadow(0 8px 14px rgba(15, 23, 42, 0.22));
+      transition: transform 0.25s ease;
+    }
+
+    .sanjana-avatar-btn:hover { transform: scale(1.08); }
+    .sanjana-avatar-btn.flipped svg { transform: scaleX(-1); }
+
+    @keyframes bobWalk {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @keyframes legSwingA {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+    }
+
+    @keyframes legSwingB {
+      0%, 100% { transform: rotate(10deg); }
+      50% { transform: rotate(-10deg); }
+    }
+
+    @keyframes wandTwinkle {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+      50% { transform: scale(1.25) rotate(18deg); opacity: 0.75; }
+    }
+
+    @keyframes hopCelebrate {
+      0% { transform: translateY(0) scale(1); }
+      35% { transform: translateY(-18px) scale(1.08); }
+      70% { transform: translateY(-4px) scale(0.98); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    .walking .avatar-body { animation: bobWalk 0.55s infinite ease-in-out; }
+    .walking .leg-l { transform-origin: 31px 58px; animation: legSwingA 0.55s infinite ease-in-out; }
+    .walking .leg-r { transform-origin: 37px 58px; animation: legSwingB 0.55s infinite ease-in-out; }
+    .wand-star { transform-origin: 56px 26px; animation: wandTwinkle 1.8s infinite ease-in-out; }
+    .hopping { animation: hopCelebrate 0.55s ease; }
+
     /* Floating Dock */
     .dock {
       position: fixed;
-      bottom: 18px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 45;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 18px;
+      gap: 7px;
+      padding: 7px 13px;
+      border-radius: 16px;
       background: var(--surface);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
@@ -649,38 +710,34 @@
     }
 
     .dock-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 11px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
       border: 1px solid transparent;
-      background: rgba(127, 127, 127, 0.08);
+      background: rgba(127, 127, 127, 0.06);
       color: var(--text);
       display: grid;
       place-items: center;
       text-decoration: none;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
       transition: transform 0.18s ease, background 0.18s ease;
     }
 
     .dock-btn:hover {
-      transform: translateY(-5px) scale(1.12);
+      transform: translateY(-4px) scale(1.1);
       background: var(--accent-soft);
       border-color: var(--accent);
     }
 
-    .dock-sep {
-      width: 1px;
-      height: 22px;
-      background: var(--border-strong);
-    }
+    .dock-sep { width: 1px; height: 20px; background: var(--border-strong); }
 
-    /* Modals (Inspector, Cmd+K, README) */
+    /* Modals */
     .modal-backdrop {
       position: fixed;
       inset: 0;
       z-index: 60;
-      background: rgba(3, 5, 10, 0.72);
+      background: rgba(3, 5, 10, 0.68);
       backdrop-filter: blur(8px);
       display: none;
       place-items: center;
@@ -691,7 +748,7 @@
 
     .modal-box {
       width: 100%;
-      max-width: 640px;
+      max-width: 620px;
       max-height: 85vh;
       overflow-y: auto;
       border-radius: 20px;
@@ -702,7 +759,7 @@
     }
 
     .code-pre {
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(127, 127, 127, 0.08);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 14px;
@@ -720,7 +777,7 @@
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     .cmd-item:hover { background: var(--accent-soft); }
@@ -730,7 +787,7 @@
   <div class="bg-grid"></div>
   <div class="bg-orb"></div>
 
-  <!-- Top Navigation Bar -->
+  <!-- Top Navigation -->
   <header class="topbar">
     <div class="brand">
       <div class="brand-spark">✨</div>
@@ -738,229 +795,384 @@
     </div>
 
     <nav class="nav-links">
-      <a href="#hero">Studio</a>
-      <a href="#morpher">Chaos → Magic</a>
-      <a href="#heatmap">Activity</a>
-      <a href="#lab">Content Lab</a>
+      <a href="#overview">Overview</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#spotlight">Spotlight Work</a>
+      <a href="#transformer">Problem → Magic</a>
+      <a href="#experience">Experience</a>
     </nav>
 
     <div class="controls">
-      <div class="aura-picker" title="Switch Accent Aura">
-        <button class="aura-dot active" data-set-aura="violet" aria-label="Violet Spark"></button>
-        <button class="aura-dot" data-set-aura="mint" aria-label="Cyber Mint"></button>
-        <button class="aura-dot" data-set-aura="coral" aria-label="Sassy Coral"></button>
+      <div class="aura-picker" title="Switch Palette">
+        <button class="aura-dot active" data-set-aura="violet" aria-label="Royal Violet"></button>
+        <button class="aura-dot" data-set-aura="teal" aria-label="Oceanic Teal"></button>
+        <button class="aura-dot" data-set-aura="coral" aria-label="Sunset Coral"></button>
       </div>
-      <button class="btn" id="themeToggle" title="Toggle Dark/Light Theme">🌗 Theme</button>
+      <button class="btn" id="avatarToggleBtn" title="Pause or Resume Mini-Sanjana">🪄 Park Avatar</button>
+      <button class="btn" id="themeToggle" title="Toggle Light/Dark Mode">🌗</button>
       <button class="btn" id="openCmdBtn" title="Command Palette">⌘K</button>
       <button class="btn btn-primary" id="openReadmeBtn">GitHub README</button>
     </div>
   </header>
 
   <main class="container">
-    <!-- Hero Bento Grid -->
-    <section class="bento-grid" id="hero">
-      <div class="card span-8 spotlight-card">
-        <div class="shimmer-pill">
-          <span class="pulse-dot"></span>
-          <span>Analytics &amp; Innovation Developer • Building in Public</span>
-        </div>
-
-        <h1 class="hero-title">
-          It's <span class="gradient-text">Technically Magic</span>.
-        </h1>
-
-        <p class="hero-sub">
-          Hi, I’m <strong>Sanjana Putchala</strong>. I untangle messy data problems, squash "impossible" bugs, and automate away repetitive busywork—turning reactive firefighting into proactive storytelling.
-        </p>
-
-        <div class="handle-bar">
-          <button class="copy-pill mono" id="copyGitHubHandle">
-            <span>github.com/ItsTechnicallyMagic</span>
-            <span id="copyStatus">📋 Copy</span>
-          </button>
-          <span class="badge mono">YouTube: @ItsTechnically-Magic</span>
-        </div>
-
-        <div class="social-row">
-          <a class="btn btn-primary" href="https://github.com/ItsTechnicallyMagic" target="_blank" rel="noopener">💻 GitHub</a>
-          <a class="btn" href="https://youtube.com/@ItsTechnically-Magic" target="_blank" rel="noopener">▶️ YouTube</a>
-          <a class="btn" href="https://medium.com/@ItsTechnicallyMagic" target="_blank" rel="noopener">✍️ Medium</a>
-          <a class="btn" href="https://www.linkedin.com/in/itstechnicallymagic" target="_blank" rel="noopener">💼 LinkedIn</a>
-        </div>
-      </div>
-
-      <!-- Magic Radar Card -->
-      <div class="card span-4 spotlight-card">
-        <div class="radar-wrap">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <h3 style="font-size:1.05rem;">Magic Radar</h3>
-              <span class="badge mono">ACTIVE SCAN</span>
-            </div>
-            <p style="font-size:0.82rem;color:var(--muted);margin-top:4px;">
-              Deep root-cause discovery &amp; proactive innovation telemetry.
-            </p>
+    <!-- 1. Executive Hero & Career Wins -->
+    <section class="card spotlight-card" id="overview" data-say="Hi! I’m Mini-Sanjana ✨ Click me or hover any section to explore!">
+      <div class="hero-grid">
+        <div>
+          <div class="status-pill">
+            <span class="pulse-dot"></span>
+            <span>Analytics &amp; Innovation Developer • San Antonio, TX</span>
           </div>
 
-          <div class="radar-visual">
-            <div class="radar-sweep"></div>
-            <div class="radar-blip" style="top:28%;left:64%;"></div>
-            <div class="radar-blip" style="top:66%;left:32%;animation-delay:0.8s;"></div>
-            <span class="mono" style="font-size:0.72rem;z-index:2;font-weight:600;">MAGIC OS</span>
+          <h1 class="hero-name">Sanjana Putchala</h1>
+          <div class="hero-role gradient-text">
+            Senior BI &amp; Analytics Solutions Architect • Creator @ItsTechnically-Magic
           </div>
 
-          <div>
-            <div class="radar-tabs">
-              <button class="radar-tab active" data-radar="root">Root-Cause</button>
-              <button class="radar-tab" data-radar="auto">Automation</button>
-              <button class="radar-tab" data-radar="story">Storytelling</button>
-            </div>
-            <div class="radar-readout" id="radarReadout">
-              <strong>Root-Cause Magic:</strong> Tracing tangled semantic dependencies back to clean, single-source logic.
-            </div>
+          <p class="hero-bio">
+            With <strong>7+ years</strong> across energy, fintech, and global operations, I bridge enterprise data architecture, workflow automation, and applied machine learning—turning tangled legacy reporting and manual bottlenecks into scalable, proactive analytics products.
+          </p>
+
+          <div class="social-row">
+            <a class="btn btn-primary" href="https://www.linkedin.com/in/sanjanaputchala/" target="_blank" rel="noopener">💼 Connect on LinkedIn</a>
+            <a class="btn" href="https://github.com/ItsTechnicallyMagic" target="_blank" rel="noopener">💻 GitHub</a>
+            <a class="btn" href="https://www.youtube.com/@ItsTechnically-Magic" target="_blank" rel="noopener">▶️ YouTube</a>
+            <a class="btn" href="https://medium.com/@sanjana.putchala" target="_blank" rel="noopener">✍️ Medium</a>
+          </div>
+        </div>
+
+        <div class="wins-grid">
+          <div class="win-tile" data-say="7+ years modernizing enterprise BI, cloud warehouses & ML pipelines! 🚀">
+            <div class="win-num gradient-text">7+ Yrs</div>
+            <div class="win-label">Enterprise BI, Cloud Architecture &amp; Applied Data Science</div>
+          </div>
+          <div class="win-tile" data-say="Cut SQL query times & ETL incident resolution by 50%! ⚡">
+            <div class="win-num gradient-text">50% Faster</div>
+            <div class="win-label">SQL Query Performance &amp; Automated ETL Incident Resolution</div>
+          </div>
+          <div class="win-tile" data-say="Built customer segmentation & pricing tools that lifted sales 15%! 📈">
+            <div class="win-num gradient-text">+20% / +15%</div>
+            <div class="win-label">Customer Engagement &amp; Sales Lift from Segmentation Models</div>
+          </div>
+          <div class="win-tile" data-say="Upskilled 50+ analysts & leaders in self-service analytics! 🎓">
+            <div class="win-num gradient-text">50+ Pros</div>
+            <div class="win-label">Business Leaders &amp; Analysts Upskilled in Analytics &amp; Insights</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Interactive Chaos -> Technically Magic Architecture Morpher -->
-    <section class="card spotlight-card" id="morpher" style="margin-bottom:22px;">
-      <div class="section-header">
+    <!-- 2. Interactive Skills & Capability Matrix -->
+    <section class="card spotlight-card" id="capabilities" data-say="Click any skill pill to highlight where I’ve shipped it! 🔍">
+      <div class="section-head">
         <div>
-          <h2 style="font-size:1.35rem;">Chaos → Technically Magic Transformer</h2>
-          <p style="font-size:0.86rem;color:var(--muted);">
-            Slide or cast magic to transform reactive data headaches into automated blueprints.
-          </p>
+          <h2 class="section-title">Core Capabilities &amp; Technical Stack</h2>
+          <p class="section-sub">Click any skill tag to spotlight matching projects and experience below.</p>
+        </div>
+        <div id="activeSkillBanner" style="display:none;align-items:center;gap:8px;">
+          <span class="badge mono" id="activeSkillText"></span>
+          <button class="btn" id="clearSkillBtn" style="padding:4px 10px;font-size:0.76rem;">✕ Clear</button>
+        </div>
+      </div>
+
+      <div class="skills-pillars">
+        <div class="pillar-box">
+          <div class="pillar-title">📊 BI Architecture &amp; Semantic Modeling</div>
+          <div class="chip-wrap">
+            <button class="skill-chip" data-skill="Power BI">Power BI &amp; Advanced DAX</button>
+            <button class="skill-chip" data-skill="PBIP">PBIP &amp; Git CI/CD</button>
+            <button class="skill-chip" data-skill="STAR Schema">STAR Schema Modeling</button>
+            <button class="skill-chip" data-skill="Governance">Row-Level Security (RLS)</button>
+            <button class="skill-chip" data-skill="Tableau">Tableau &amp; MicroStrategy</button>
+          </div>
+        </div>
+
+        <div class="pillar-box">
+          <div class="pillar-title">☁️ Cloud Warehousing &amp; Data Engineering</div>
+          <div class="chip-wrap">
+            <button class="skill-chip" data-skill="Azure">Microsoft Azure (ADF / Synapse)</button>
+            <button class="skill-chip" data-skill="Snowflake">Snowflake &amp; Redshift</button>
+            <button class="skill-chip" data-skill="SQL">SQL Tuning, CTEs &amp; Indexing</button>
+            <button class="skill-chip" data-skill="Pipelines">Adaptive ETL / ELT Pipelines</button>
+            <button class="skill-chip" data-skill="Automation">Workflow Automation</button>
+          </div>
+        </div>
+
+        <div class="pillar-box">
+          <div class="pillar-title">🧠 Data Science &amp; Applied Machine Learning</div>
+          <div class="chip-wrap">
+            <button class="skill-chip" data-skill="Python">Python (Pandas / Scikit-learn)</button>
+            <button class="skill-chip" data-skill="Anomaly">Anomaly Detection &amp; Autoencoders</button>
+            <button class="skill-chip" data-skill="Segmentation">Customer Persona &amp; Pricing</button>
+            <button class="skill-chip" data-skill="Forecasting">Time Series &amp; NLP</button>
+            <button class="skill-chip" data-skill="Testing">A/B Testing &amp; Validation</button>
+          </div>
+        </div>
+
+        <div class="pillar-box">
+          <div class="pillar-title">🚀 Innovation, AI Copilots &amp; Enablement</div>
+          <div class="chip-wrap">
+            <button class="skill-chip" data-skill="AI Copilots">AI Copilot DAX &amp; Code Review</button>
+            <button class="skill-chip" data-skill="Storytelling">Executive Data Storytelling</button>
+            <button class="skill-chip" data-skill="Governance">Data Governance &amp; Six Sigma</button>
+            <button class="skill-chip" data-skill="Enablement">Stakeholder Training (50+)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Spotlight Case Studies & Featured Publications -->
+    <section class="card spotlight-card" id="spotlight" data-say="Inspect any project or article for the Problem → Magic → Impact breakdown! ✨">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Spotlight Projects &amp; Thought Leadership</h2>
+          <p class="section-sub">Open-source developer utilities, featured industry writing, and technical walkthroughs.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <div class="pill-group" id="projectFilters">
+            <button class="seg-btn active" data-ptype="all">All</button>
+            <button class="seg-btn" data-ptype="repo">Open-Source Tools</button>
+            <button class="seg-btn" data-ptype="article">Medium &amp; DataCamp</button>
+            <button class="seg-btn" data-ptype="video">YouTube</button>
+          </div>
+          <span class="badge mono" id="repoSyncBadge">Syncing GitHub...</span>
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid"></div>
+    </section>
+
+    <!-- 4. Interactive Problem -> Magic -> Impact Architecture Transformer -->
+    <section class="card spotlight-card" id="transformer" data-say="Drag the slider to watch legacy bottlenecks transform into clean architecture! 🪄">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">How I Solve Ambiguous Data Problems</h2>
+          <p class="section-sub">Interactive architectural transformations inspired by real enterprise engagements.</p>
         </div>
         <div class="pill-group" id="scenarioTabs">
-          <button class="seg-btn active" data-scenario="0">Tangled Models</button>
-          <button class="seg-btn" data-scenario="1">5-Hr Manual Reporting</button>
-          <button class="seg-btn" data-scenario="2">'Impossible' Bugs</button>
+          <button class="seg-btn active" data-sc="0">Legacy BI → PBIP CI/CD</button>
+          <button class="seg-btn" data-sc="1">ETL Delays → Auto-Healing</button>
+          <button class="seg-btn" data-sc="2">Static Pricing → Persona &amp; ML</button>
         </div>
       </div>
 
-      <div class="morph-controls">
-        <span class="mono" style="font-size:0.8rem;">🔥 Reactive Chaos</span>
-        <input type="range" id="magicSlider" min="0" max="100" value="85" />
-        <span class="mono" style="font-size:0.8rem;">✨ Technically Magic</span>
-        <button class="btn btn-primary" id="castMagicBtn">Cast Magic ✨</button>
+      <div class="morph-bar">
+        <span class="mono" style="font-size:0.78rem;">🔥 Before (Reactive)</span>
+        <input type="range" id="magicSlider" min="0" max="100" value="90" />
+        <span class="mono" style="font-size:0.78rem;">✨ After (Technically Magic)</span>
+        <button class="btn btn-primary" id="toggleMagicBtn">Flip State ✨</button>
       </div>
 
-      <div class="pipeline-stage" id="pipelineStage"></div>
-
-      <div class="metrics-strip">
-        <div class="metric-tile">
-          <div style="font-size:0.78rem;color:var(--muted);">Architecture Clarity</div>
-          <div class="metric-val gradient-text" id="metricClarity">94%</div>
-        </div>
-        <div class="metric-tile">
-          <div style="font-size:0.78rem;color:var(--muted);">Hours Reclaimed / Week</div>
-          <div class="metric-val" id="metricHours">+11.5 hrs</div>
-        </div>
-        <div class="metric-tile">
-          <div style="font-size:0.78rem;color:var(--muted);">Mode Status</div>
-          <div class="metric-val mono" style="font-size:1rem;padding-top:4px;" id="metricState">PROACTIVE MAGIC</div>
-        </div>
-      </div>
+      <div class="pipeline-grid" id="pipelineGrid"></div>
     </section>
 
-    <!-- 20-Week Creator & Builder Activity Heatmap -->
-    <section class="card spotlight-card" id="heatmap" style="margin-bottom:22px;">
-      <div class="section-header">
+    <!-- 5. Career Experience, Education & Certifications -->
+    <section class="card spotlight-card" id="experience" data-say="7+ years across Marathon Petroleum, HF Sinclair, TaskUs & IBC Bank! 💼">
+      <div class="section-head">
         <div>
-          <h2 style="font-size:1.25rem;">20-Week Builder &amp; Creator Pulse</h2>
-          <p style="font-size:0.84rem;color:var(--muted);">
-            Hover or tap any block to inspect shipping velocity across code, video, and essays.
-          </p>
+          <h2 class="section-title">Experience &amp; Credentials</h2>
+          <p class="section-sub">Delivering scalable analytics, governance, and measurable business outcomes.</p>
         </div>
-        <div class="pill-group" id="heatFilters">
-          <button class="seg-btn active" data-heat="all">All Activity</button>
-          <button class="seg-btn" data-heat="dev">Dev &amp; Tools</button>
-          <button class="seg-btn" data-heat="video">YouTube</button>
-          <button class="seg-btn" data-heat="writing">Medium</button>
-        </div>
+        <a class="btn" href="https://www.linkedin.com/in/sanjanaputchala/" target="_blank" rel="noopener">Full LinkedIn Profile ↗</a>
       </div>
 
-      <div class="heatmap-grid" id="heatmapGrid"></div>
+      <div class="timeline" id="experienceList">
+        <article class="role-item" data-tags="Power BI,PBIP,STAR Schema,Azure,Snowflake,SQL,Python,Anomaly,Segmentation,AI Copilots,Governance,Enablement">
+          <div class="role-header">
+            <div>
+              <h3 style="font-size:1.06rem;">Power BI Consultant — Analytics &amp; Insights</h3>
+              <div style="font-size:0.86rem;color:var(--muted);">First Object, Inc. • Client: <strong>Marathon Petroleum Corporation</strong></div>
+            </div>
+            <span class="badge mono">Feb 2024 – Present</span>
+          </div>
+          <ul class="role-bullets">
+            <li>Lead modernization of legacy operational reporting suites into Microsoft Azure and Power BI, architecting STAR schema dimensional models and centralized semantic layers.</li>
+            <li>Implemented Git version control workflows using <strong>PBIP (Power BI Project)</strong> format, enabling structured branching, PR reviews, and CI/CD across enterprise workspaces.</li>
+            <li>Built the <em>Customer Persona</em> pricing analytics app with Row-Level Security (RLS), engineered the <em>Leading Indicators</em> executive suite using AI copilots for DAX optimization, and upskilled <strong>50+ stakeholders</strong>.</li>
+            <li>Developed Python &amp; SQL anomaly detection and autoencoder workflows to surface irregular patterns in enterprise transaction logs.</li>
+          </ul>
+        </article>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:0.82rem;color:var(--muted);">
-        <span id="heatLog">✨ Hover any cell to inspect daily shipping logs.</span>
-        <span class="mono">Less ▢ ▤ ▦ ■ More</span>
+        <article class="role-item" data-tags="Power BI,Tableau,Snowflake,SQL,Automation,Testing,Governance">
+          <div class="role-header">
+            <div>
+              <h3 style="font-size:1.06rem;">BI &amp; Reporting Consultant</h3>
+              <div style="font-size:0.86rem;color:var(--muted);">First Object, Inc. • Client: <strong>HF Sinclair</strong></div>
+            </div>
+            <span class="badge mono">Aug 2023 – Feb 2024</span>
+          </div>
+          <ul class="role-bullets">
+            <li>Engineered interactive Power BI and MicroStrategy executive dashboards for cross-departmental operational drill-down.</li>
+            <li>Automated recurring extraction and reporting pipelines using SAS, SQL (views, CTEs, stored procedures), VBA, and Snowflake, eliminating manual bottlenecks.</li>
+          </ul>
+        </article>
+
+        <article class="role-item" data-tags="Python,SQL,Segmentation,Forecasting,Pipelines,Automation,Power BI,Tableau,Governance">
+          <div class="role-header">
+            <div>
+              <h3 style="font-size:1.06rem;">Data Scientist &amp; Business Intelligence Analyst</h3>
+              <div style="font-size:0.86rem;color:var(--muted);"><strong>TaskUs</strong> • San Antonio, TX</div>
+            </div>
+            <span class="badge mono">Mar 2018 – Aug 2023</span>
+          </div>
+          <ul class="role-bullets">
+            <li>Built an end-to-end customer segmentation platform using logistic regression and decision trees, driving a <strong>20% lift in engagement</strong> and <strong>15% increase in sales</strong>.</li>
+            <li>Eliminated ETL refresh bottlenecks with automated alerting and cleansing workflows, cutting <strong>issue resolution time by 50%</strong> and boosting data accuracy by <strong>30%</strong>.</li>
+            <li>Tuned complex SQL queries and relational schemas to cut <strong>query execution times by 50%</strong>, and designed a global training analytics framework supporting nearly <strong>$1M in contract renewals</strong>.</li>
+          </ul>
+        </article>
+
+        <article class="role-item" data-tags="Forecasting,Storytelling,Governance">
+          <div class="role-header">
+            <div>
+              <h3 style="font-size:1.06rem;">Financial Analyst — Enterprise Risk Management</h3>
+              <div style="font-size:0.86rem;color:var(--muted);"><strong>IBC Bank</strong> • San Antonio, TX</div>
+            </div>
+            <span class="badge mono">Oct 2017 – Feb 2018</span>
+          </div>
+          <ul class="role-bullets">
+            <li>Constructed quantitative forecasting models and executive risk visualizations to guide credit exposure and capital allocation decisions.</li>
+          </ul>
+        </article>
       </div>
-    </section>
 
-    <!-- Open-Source & Content Lab (Auto-Syncs with GitHub API) -->
-    <section class="card spotlight-card" id="lab">
-      <div class="section-header">
-        <div>
-          <h2 style="font-size:1.35rem;">Open-Source &amp; Content Lab</h2>
-          <p style="font-size:0.84rem;color:var(--muted);">
-            Live-synced with <span class="mono">github.com/ItsTechnicallyMagic</span> + featured YouTube &amp; Medium drops.
-          </p>
+      <div class="creds-grid">
+        <div class="cred-box">
+          <strong>🎓 M.S. in Information Systems</strong><br />
+          <span style="color:var(--muted);">Texas A&amp;M International University</span>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span class="badge mono" id="syncBadge">Syncing GitHub...</span>
-          <button class="btn" id="refreshReposBtn" title="Refresh GitHub Repositories">↻ Sync</button>
+        <div class="cred-box">
+          <strong>🎓 B.Tech in Computer Science &amp; Eng.</strong><br />
+          <span style="color:var(--muted);">SRM University</span>
+        </div>
+        <div class="cred-box">
+          <strong>🏅 Microsoft Certified: PL-300</strong><br />
+          <span style="color:var(--muted);">Power BI Data Analyst Associate</span>
+        </div>
+        <div class="cred-box">
+          <strong>🏅 IBM Professional Certification</strong><br />
+          <span style="color:var(--muted);">Applied Data Science</span>
         </div>
       </div>
-
-      <div class="lab-toolbar">
-        <div class="pill-group" id="labFilters">
-          <button class="seg-btn active" data-filter="all">All</button>
-          <button class="seg-btn" data-filter="repo">GitHub Repos</button>
-          <button class="seg-btn" data-filter="video">YouTube</button>
-          <button class="seg-btn" data-filter="article">Medium</button>
-        </div>
-        <input type="search" class="search-input" id="labSearch" placeholder="Search repos, videos, essays..." />
-      </div>
-
-      <div class="lab-grid" id="labGrid"></div>
     </section>
   </main>
 
+  <!-- =========================================================
+       MINI-SANJANA INTERACTIVE AVATAR COMPANION
+       ========================================================= -->
+  <div class="mini-sanjana-stage walking" id="miniSanjanaStage">
+    <div class="sanjana-bubble" id="sanjanaBubble">
+      Hi! I’m Mini-Sanjana ✨ Click me or hover any section to explore!
+    </div>
+    <button class="sanjana-avatar-btn" id="sanjanaAvatarBtn" title="Click Mini-Sanjana for a fun insight!">
+      <!-- Custom SVG Chibi modeled after Sanjana's profile look: dark wavy hair, warm smile, black top, light taupe blazer & spark wand -->
+      <svg width="68" height="82" viewBox="0 0 68 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g class="avatar-body">
+          <!-- Back Wavy Dark Hair -->
+          <path d="M17 24C14 34 13 48 18 57C21 61 25 60 26 55L25 32L17 24Z" fill="#1E1B24"/>
+          <path d="M51 24C54 34 55 48 50 57C47 61 43 60 42 55L43 32L51 24Z" fill="#1E1B24"/>
+
+          <!-- Legs & Ankle Boots -->
+          <g class="leg-l">
+            <rect x="27" y="57" width="6" height="15" rx="3" fill="#1E293B"/>
+            <path d="M25 70H33V74C33 75.1 32.1 76 31 76H24C24 73 24.5 71 25 70Z" fill="#0F172A"/>
+          </g>
+          <g class="leg-r">
+            <rect x="35" y="57" width="6" height="15" rx="3" fill="#1E293B"/>
+            <path d="M35 70H43C43.5 71 44 73 44 76H37C35.9 76 35 75.1 35 74V70Z" fill="#0F172A"/>
+          </g>
+
+          <!-- Black Inner Top -->
+          <path d="M24 37H44L46 58H22L24 37Z" fill="#111827"/>
+
+          <!-- Light Taupe / Warm Grey Tailored Blazer -->
+          <path d="M22 37C20 37 18 39 18 42L17 57H26L28 37H22Z" fill="#D6D3D1"/>
+          <path d="M46 37C48 37 50 39 50 42L51 57H42L40 37H46Z" fill="#D6D3D1"/>
+          <!-- Blazer Lapels -->
+          <path d="M28 37L31 46L26 48L25 37H28Z" fill="#E7E5E4"/>
+          <path d="M40 37L37 46L42 48L43 37H40Z" fill="#E7E5E4"/>
+
+          <!-- Left Arm -->
+          <path d="M18 40L14 51C13.5 52.5 14.5 54 16 54C17.2 54 18.2 53.2 18.6 52L21 43" fill="#D6D3D1"/>
+          <circle cx="15.8" cy="53" r="2.4" fill="#B67B5B"/>
+
+          <!-- Right Arm Holding Magic Wand -->
+          <path d="M50 40L55 46L58 39" stroke="#D6D3D1" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="58" cy="39" r="2.4" fill="#B67B5B"/>
+
+          <!-- Magic Spark Wand -->
+          <line x1="58" y1="39" x2="56" y2="26" stroke="#7C3AED" stroke-width="2.2" stroke-linecap="round"/>
+          <g class="wand-star">
+            <path d="M56 20L57.5 24.5L62 26L57.5 27.5L56 32L54.5 27.5L50 26L54.5 24.5L56 20Z" fill="#22D3EE"/>
+          </g>
+
+          <!-- Neck & Head -->
+          <rect x="31" y="32" width="6" height="6" rx="3" fill="#B67B5B"/>
+          <circle cx="34" cy="22" r="12.5" fill="#C48766"/>
+
+          <!-- Front Hair Swoop & Waves -->
+          <path d="M21 21C21 12.5 27 8 34 8C41 8 47 12.5 47 21C45 16 40 14 35 14C29 14 24 17 21 21Z" fill="#1E1B24"/>
+          <path d="M21.5 20C20 26 20 33 22 39" stroke="#1E1B24" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M46.5 20C48 26 48 33 46 39" stroke="#1E1B24" stroke-width="3.5" stroke-linecap="round"/>
+
+          <!-- Expressive Eyes, Brows & Warm Smile -->
+          <path d="M27.5 19.5Q29.5 18.2 31.5 19.5" stroke="#1E1B24" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M36.5 19.5Q38.5 18.2 40.5 19.5" stroke="#1E1B24" stroke-width="1.3" stroke-linecap="round"/>
+          <circle cx="29.5" cy="22" r="1.7" fill="#1E1B24"/>
+          <circle cx="38.5" cy="22" r="1.7" fill="#1E1B24"/>
+          <circle cx="30" cy="21.4" r="0.55" fill="#FFFFFF"/>
+          <circle cx="39" cy="21.4" r="0.55" fill="#FFFFFF"/>
+          <!-- Rosy Cheeks -->
+          <ellipse cx="26.5" cy="25" rx="2.1" ry="1.2" fill="#F43F5E" fill-opacity="0.28"/>
+          <ellipse cx="41.5" cy="25" rx="2.1" ry="1.2" fill="#F43F5E" fill-opacity="0.28"/>
+          <!-- Smile -->
+          <path d="M31 26.5Q34 29.5 37 26.5" stroke="#7C2D12" stroke-width="1.6" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </button>
+  </div>
+
   <!-- Floating Dock -->
   <div class="dock">
-    <a class="dock-btn" href="#hero" title="Top / Studio">✨</a>
+    <a class="dock-btn" href="#overview" title="Overview">✨</a>
+    <a class="dock-btn" href="https://www.linkedin.com/in/sanjanaputchala/" target="_blank" rel="noopener" title="LinkedIn">💼</a>
     <a class="dock-btn" href="https://github.com/ItsTechnicallyMagic" target="_blank" rel="noopener" title="GitHub">💻</a>
-    <a class="dock-btn" href="https://youtube.com/@ItsTechnically-Magic" target="_blank" rel="noopener" title="YouTube">▶️</a>
-    <a class="dock-btn" href="https://medium.com/@ItsTechnicallyMagic" target="_blank" rel="noopener" title="Medium">✍️</a>
-    <a class="dock-btn" href="https://www.linkedin.com/in/itstechnicallymagic" target="_blank" rel="noopener" title="LinkedIn">💼</a>
+    <a class="dock-btn" href="https://www.youtube.com/@ItsTechnically-Magic" target="_blank" rel="noopener" title="YouTube">▶️</a>
+    <a class="dock-btn" href="https://medium.com/@sanjana.putchala" target="_blank" rel="noopener" title="Medium">✍️</a>
     <div class="dock-sep"></div>
+    <button class="dock-btn" id="dockAvatarBtn" title="Toggle Mini-Sanjana">🪄</button>
     <button class="dock-btn" id="dockThemeBtn" title="Toggle Theme">🌗</button>
     <button class="dock-btn" id="dockCmdBtn" title="Command Palette (⌘K)">⌘</button>
   </div>
 
-  <!-- Blueprint Inspector Modal -->
-  <div class="modal-backdrop" id="inspectorModal">
+  <!-- Case Study Modal -->
+  <div class="modal-backdrop" id="caseModal">
     <div class="modal-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <span class="badge mono" id="modalType">BLUEPRINT</span>
-        <button class="btn" onclick="closeModal('inspectorModal')">✕ Close</button>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <span class="badge mono" id="mBadge">CASE STUDY</span>
+        <button class="btn" onclick="closeModal('caseModal')">✕ Close</button>
       </div>
-      <h3 id="modalTitle" style="font-size:1.35rem;margin-bottom:8px;"></h3>
-      <p id="modalDesc" style="color:var(--muted);font-size:0.92rem;margin-bottom:14px;"></p>
-      <div class="radar-readout" id="modalDetails" style="margin-bottom:16px;"></div>
-      <a class="btn btn-primary" id="modalLink" href="#" target="_blank" rel="noopener">Open Resource ↗</a>
+      <h3 id="mTitle" style="font-size:1.35rem;margin-bottom:8px;"></h3>
+      <p id="mSummary" style="color:var(--muted);font-size:0.92rem;margin-bottom:14px;"></p>
+      <div class="pmi-mini" id="mDetails" style="margin-bottom:16px;line-height:1.65;"></div>
+      <a class="btn btn-primary" id="mLink" href="#" target="_blank" rel="noopener">Explore Resource ↗</a>
     </div>
   </div>
 
   <!-- Command Palette Modal -->
   <div class="modal-backdrop" id="cmdModal">
-    <div class="modal-box" style="max-width:500px;">
+    <div class="modal-box" style="max-width:480px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <strong class="mono" style="font-size:0.82rem;">COMMAND PALETTE</strong>
+        <strong class="mono" style="font-size:0.8rem;">QUICK NAVIGATION</strong>
         <button class="btn" onclick="closeModal('cmdModal')">ESC</button>
       </div>
-      <div id="cmdList">
-        <div class="cmd-item" onclick="toggleTheme(); closeModal('cmdModal')"><span>🌗 Toggle Dark / Light Mode</span><span class="mono">Theme</span></div>
-        <div class="cmd-item" onclick="setAura('violet'); closeModal('cmdModal')"><span>🔮 Switch Aura: Violet Spark</span><span class="mono">Aura</span></div>
-        <div class="cmd-item" onclick="setAura('mint'); closeModal('cmdModal')"><span>🌿 Switch Aura: Cyber Mint</span><span class="mono">Aura</span></div>
-        <div class="cmd-item" onclick="setAura('coral'); closeModal('cmdModal')"><span>🔥 Switch Aura: Sassy Coral</span><span class="mono">Aura</span></div>
-        <div class="cmd-item" onclick="window.open('https://github.com/ItsTechnicallyMagic','_blank')"><span>💻 Open GitHub (@ItsTechnicallyMagic)</span><span class="mono">↗</span></div>
-        <div class="cmd-item" onclick="window.open('https://youtube.com/@ItsTechnically-Magic','_blank')"><span>▶️ Open YouTube (@ItsTechnically-Magic)</span><span class="mono">↗</span></div>
-        <div class="cmd-item" onclick="window.open('https://medium.com/@ItsTechnicallyMagic','_blank')"><span>✍️ Open Medium (@ItsTechnicallyMagic)</span><span class="mono">↗</span></div>
-        <div class="cmd-item" onclick="window.open('https://www.linkedin.com/in/itstechnicallymagic','_blank')"><span>💼 Open LinkedIn</span><span class="mono">↗</span></div>
-      </div>
+      <div class="cmd-item" onclick="toggleTheme(); closeModal('cmdModal')"><span>🌗 Toggle Light / Dark Theme</span><span class="mono">Theme</span></div>
+      <div class="cmd-item" onclick="toggleAvatarWalk(); closeModal('cmdModal')"><span>🪄 Pause / Resume Mini-Sanjana</span><span class="mono">Avatar</span></div>
+      <div class="cmd-item" onclick="window.open('https://www.linkedin.com/in/sanjanaputchala/','_blank')"><span>💼 Open LinkedIn Profile</span><span class="mono">↗</span></div>
+      <div class="cmd-item" onclick="window.open('https://github.com/ItsTechnicallyMagic','_blank')"><span>💻 Open GitHub (@ItsTechnicallyMagic)</span><span class="mono">↗</span></div>
+      <div class="cmd-item" onclick="window.open('https://www.youtube.com/@ItsTechnically-Magic','_blank')"><span>▶️ Open YouTube (@ItsTechnically-Magic)</span><span class="mono">↗</span></div>
+      <div class="cmd-item" onclick="window.open('https://medium.com/@sanjana.putchala','_blank')"><span>✍️ Open Medium (@sanjana.putchala)</span><span class="mono">↗</span></div>
     </div>
   </div>
 
@@ -971,8 +1183,8 @@
         <h3>GitHub Profile README.md</h3>
         <button class="btn" onclick="closeModal('readmeModal')">✕</button>
       </div>
-      <p style="font-size:0.85rem;color:var(--muted);">
-        Paste this into <strong>ItsTechnicallyMagic/ItsTechnicallyMagic/README.md</strong>. It automatically adapts to Dark and Light mode on GitHub!
+      <p style="font-size:0.84rem;color:var(--muted);">
+        Updated with your verified LinkedIn, Medium, YouTube &amp; live portfolio links for <strong>ItsTechnicallyMagic/ItsTechnicallyMagic/README.md</strong>:
       </p>
       <pre class="code-pre mono" id="readmeCode"></pre>
       <button class="btn btn-primary" id="copyReadmeBtn">📋 Copy Markdown</button>
@@ -980,332 +1192,375 @@
   </div>
 
   <script>
-    // 1. Spotlight Cursor Tracking
+    // 1. Spotlight Hover Effect
     document.querySelectorAll('.spotlight-card').forEach(card => {
       card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-        card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        card.style.setProperty('--my', `${e.clientY - r.top}px`);
       });
     });
 
-    // 2. Theme & Aura Switchers
+    // 2. Theme & Aura Controls
     function toggleTheme() {
       const html = document.documentElement;
-      html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      html.setAttribute('data-theme', html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
     }
 
     function setAura(aura) {
       document.documentElement.setAttribute('data-aura', aura);
-      document.querySelectorAll('.aura-dot').forEach(dot => {
-        dot.classList.toggle('active', dot.dataset.setAura === aura);
-      });
+      document.querySelectorAll('.aura-dot').forEach(d => d.classList.toggle('active', d.dataset.setAura === aura));
     }
 
     document.getElementById('themeToggle').addEventListener('click', toggleTheme);
     document.getElementById('dockThemeBtn').addEventListener('click', toggleTheme);
-    document.querySelectorAll('.aura-dot').forEach(dot => {
-      dot.addEventListener('click', () => setAura(dot.dataset.setAura));
+    document.querySelectorAll('.aura-dot').forEach(d => d.addEventListener('click', () => setAura(d.dataset.setAura)));
+
+    // 3. Mini-Sanjana Companion Movement & Reactions
+    const stage = document.getElementById('miniSanjanaStage');
+    const avatarBtn = document.getElementById('sanjanaAvatarBtn');
+    const bubble = document.getElementById('sanjanaBubble');
+    const avatarToggleBtn = document.getElementById('avatarToggleBtn');
+
+    let isWalking = true;
+    let posX = 28;
+    let dir = 1;
+
+    const funQuotes = [
+      "7+ years turning tangled data into clean architecture! ✨",
+      "PBIP + Git CI/CD = no more overwritten Power BI files! 💻",
+      "Featured on Medium & DataCamp—check out Adaptive Pipelines! 📖",
+      "Cut query & ETL resolution times by 50% with automation! ⚡",
+      "Subscribe to @ItsTechnically-Magic on YouTube for walkthroughs! ▶️"
+    ];
+    let quoteIdx = 0;
+
+    function say(text) {
+      bubble.textContent = text;
+    }
+
+    function hop() {
+      avatarBtn.classList.remove('hopping');
+      void avatarBtn.offsetWidth;
+      avatarBtn.classList.add('hopping');
+    }
+
+    avatarBtn.addEventListener('click', () => {
+      hop();
+      quoteIdx = (quoteIdx + 1) % funQuotes.length;
+      say(funQuotes[quoteIdx]);
     });
 
-    // Copy Handle
-    document.getElementById('copyGitHubHandle').addEventListener('click', () => {
-      navigator.clipboard.writeText('https://github.com/ItsTechnicallyMagic');
-      const status = document.getElementById('copyStatus');
-      status.textContent = '✅ Copied!';
-      setTimeout(() => (status.textContent = '📋 Copy'), 1800);
+    function toggleAvatarWalk() {
+      isWalking = !isWalking;
+      stage.classList.toggle('walking', isWalking);
+      avatarToggleBtn.textContent = isWalking ? '🪄 Park Avatar' : '🪄 Walk Avatar';
+      if (!isWalking) {
+        posX = 24;
+        stage.style.transform = `translateX(0px)`;
+        avatarBtn.classList.remove('flipped');
+        say("Parked neatly while you read! Click 🪄 anytime to resume.");
+      } else {
+        say("Back on patrol! Hover any skill or project ✨");
+      }
+    }
+
+    avatarToggleBtn.addEventListener('click', toggleAvatarWalk);
+    document.getElementById('dockAvatarBtn').addEventListener('click', toggleAvatarWalk);
+
+    // Gentle stroll across the bottom viewport track
+    setInterval(() => {
+      if (!isWalking) return;
+      const maxTravel = Math.min(window.innerWidth - 160, 760);
+      posX += dir * 34;
+      if (posX >= maxTravel) {
+        posX = maxTravel;
+        dir = -1;
+        avatarBtn.classList.add('flipped');
+      } else if (posX <= 24) {
+        posX = 24;
+        dir = 1;
+        avatarBtn.classList.remove('flipped');
+      }
+      stage.style.transform = `translateX(${posX - 24}px)`;
+    }, 1400);
+
+    // Context-aware speech bubbles on hover
+    document.querySelectorAll('[data-say]').forEach(el => {
+      el.addEventListener('mouseenter', () => say(el.dataset.say));
     });
 
-    // 3. Magic Radar Modes
-    const radarModes = {
-      root: '<strong>Root-Cause Magic:</strong> Tracing tangled semantic dependencies back to clean, single-source logic.',
-      auto: '<strong>Workflow Automation:</strong> Turning 5-hour repetitive manual tasks into one-click repeatable scripts.',
-      story: '<strong>Proactive Storytelling:</strong> Designing intuitive data experiences that answer questions before they are asked.'
-    };
-
-    document.querySelectorAll('.radar-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.radar-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('radarReadout').innerHTML = radarModes[tab.dataset.radar];
-      });
-    });
-
-    // 4. Chaos -> Technically Magic Morpher
-    const scenarios = [
+    // 4. Spotlight Case Studies & Live GitHub Sync
+    const spotlightItems = [
       {
-        chaos: [
-          { tag: '01 • Bottleneck', title: 'Spaghetti Logic', desc: 'Duplicated measures and fragile ad-hoc overrides across files.' },
-          { tag: '02 • Friction', title: 'Manual Hunting', desc: 'Hours lost clicking through nested folders to find broken links.' },
-          { tag: '03 • Symptom', title: 'Reactive Firefighting', desc: 'Fixing yesterday’s numbers right before leadership reviews.' }
-        ],
-        magic: [
-          { tag: '01 • Foundation', title: 'Clean Semantic Core', desc: 'Modular, version-controlled definitions with zero duplication.' },
-          { tag: '02 • Acceleration', title: 'Automated Decoding', desc: 'Instant structural inspection and dependency mapping.' },
-          { tag: '03 • Outcome', title: 'Proactive Clarity', desc: 'Trusted answers delivered automatically before anyone asks.' }
-        ],
-        hours: '+11.5 hrs'
+        type: 'repo',
+        badge: 'GitHub Spotlight • Semantic DevOps',
+        title: 'PBIP-Decoder',
+        tags: ['Power BI', 'PBIP', 'Automation', 'Governance'],
+        summary: 'Decodes Power BI Project (PBIP) folder structures into clean, inspectable metadata for Git CI/CD and dependency audits.',
+        pmi: '<strong>Problem:</strong> Binary .pbix files block code reviews and hide model lineage.<br><strong>Magic:</strong> Parses PBIP definitions for structured diffing and automated audits.<br><strong>Impact:</strong> Enables enterprise Git branching, PR reviews, and safer releases.',
+        url: 'https://github.com/ItsTechnicallyMagic/PBIP-Decoder'
       },
       {
-        chaos: [
-          { tag: '01 • Input', title: 'CSV Copy-Paste Loop', desc: 'Exporting raw extracts every Monday morning by hand.' },
-          { tag: '02 • Transform', title: 'Fragile Manual Edits', desc: 'One stray column shift breaks downstream summaries.' },
-          { tag: '03 • Delivery', title: 'Static Screenshots', desc: 'Outdated numbers pasted into slide decks.' }
-        ],
-        magic: [
-          { tag: '01 • Ingestion', title: 'Automated Pipeline', desc: 'Scheduled validation checks catch schema drift immediately.' },
-          { tag: '02 • Engine', title: 'Zero-Touch Scripts', desc: 'Repeatable transformations run cleanly in seconds.' },
-          { tag: '03 • Experience', title: 'Live Interactive Story', desc: 'Self-serve insights always ready for decision-makers.' }
-        ],
-        hours: '+8.0 hrs'
+        type: 'repo',
+        badge: 'GitHub Spotlight • Migration Automation',
+        title: 'PowerBI-migration-toolkit',
+        tags: ['Power BI', 'Azure', 'Automation', 'STAR Schema'],
+        summary: 'Automates repetitive workspace, dataset, and report migration tasks during legacy-to-cloud modernization.',
+        pmi: '<strong>Problem:</strong> Manual report migrations consume hours and introduce human error.<br><strong>Magic:</strong> Scripted utilities standardize connection swaps and validation checks.<br><strong>Impact:</strong> Accelerates legacy reporting cutovers into Azure & Power BI.',
+        url: 'https://github.com/ItsTechnicallyMagic/PowerBI-migration-toolkit'
       },
       {
-        chaos: [
-          { tag: '01 • Error', title: 'Cryptic Failure Logs', desc: 'Opaque error messages with zero lineage context.' },
-          { tag: '02 • Guesswork', title: 'Trial-and-Error Fixes', desc: 'Patching symptoms without isolating root causes.' },
-          { tag: '03 • Risk', title: 'Regression Surprises', desc: 'Fixing one view accidentally breaks three others.' }
-        ],
-        magic: [
-          { tag: '01 • Diagnostics', title: 'Magic Radar Trace', desc: 'Pinpoints exact root-cause anomalies in minutes.' },
-          { tag: '02 • Guardrails', title: 'Automated Regression Tests', desc: 'Diff-checks verify every change prior to release.' },
-          { tag: '03 • Confidence', title: 'Predictable Releases', desc: 'Ship fast with clean documentation and peace of mind.' }
-        ],
-        hours: '+14.0 hrs'
+        type: 'article',
+        badge: 'Featured on Medium & DataCamp',
+        title: 'Build Adaptive Data Pipelines for Future-Proof Analytics',
+        tags: ['Pipelines', 'Azure', 'Snowflake', 'SQL', 'Governance'],
+        summary: 'Architectural blueprint for resilient, self-healing pipelines that absorb schema changes without breaking downstream BI.',
+        pmi: '<strong>Problem:</strong> Upstream schema drift silently breaks executive dashboards.<br><strong>Magic:</strong> Metadata-driven validation, automated alerting, and modular ELT layers.<br><strong>Impact:</strong> Featured publication on Medium & DataCamp for resilient data engineering.',
+        url: 'https://medium.com/@sanjana.putchala'
+      },
+      {
+        type: 'video',
+        badge: 'YouTube • @ItsTechnically-Magic',
+        title: 'From Reactive Debugging to Proactive Data Storytelling',
+        tags: ['Power BI', 'Automation', 'Storytelling', 'AI Copilots'],
+        summary: 'Practical video walkthroughs on root-cause debugging, workflow automation, and designing clean analytics solutions.',
+        pmi: '<strong>Problem:</strong> Data teams get stuck firefighting broken calculations and manual tasks.<br><strong>Magic:</strong> Step-by-step blueprints for automation and clean semantic design.<br><strong>Impact:</strong> Helps analysts reclaim hours and build proactive data products.',
+        url: 'https://www.youtube.com/@ItsTechnically-Magic'
       }
     ];
 
-    let activeScenario = 0;
+    let dynamicRepos = [];
+    let activeProjectType = 'all';
+    let activeSkillFilter = null;
 
-    function renderMorpher() {
+    async function syncGitHubRepos() {
+      const badge = document.getElementById('repoSyncBadge');
+      try {
+        const res = await fetch('https://api.github.com/users/ItsTechnicallyMagic/repos?sort=updated&per_page=10');
+        if (!res.ok) throw new Error('Sync fallback');
+        const repos = await res.json();
+        const existingNames = new Set(spotlightItems.map(i => i.title.toLowerCase()));
+
+        dynamicRepos = repos
+          .filter(r => !r.fork && !existingNames.has(r.name.toLowerCase()) && r.name.toLowerCase() !== 'itstechnicallymagic' && r.name.toLowerCase() !== 'itstechnicallymagic.github.io')
+          .map(r => ({
+            type: 'repo',
+            badge: `GitHub • ${r.language || 'Open Source'}`,
+            title: r.name,
+            tags: [r.language || 'Automation', 'Power BI'],
+            summary: r.description || 'Open-source analytics utility & innovation experiment by Sanjana Putchala.',
+            pmi: `<strong>Repository:</strong> ${r.full_name}<br><strong>Stars:</strong> ${r.stargazers_count} • <strong>Updated:</strong> ${new Date(r.updated_at).toLocaleDateString()}`,
+            url: r.html_url
+          }));
+
+        badge.textContent = `GitHub Live Synced ✓`;
+      } catch (e) {
+        badge.textContent = `GitHub Connected ✓`;
+      }
+      renderProjects();
+    }
+
+    function renderProjects() {
+      const all = [...spotlightItems, ...dynamicRepos].filter(item => {
+        const typeOk = activeProjectType === 'all' || item.type === activeProjectType;
+        return typeOk;
+      });
+
+      const grid = document.getElementById('projectsGrid');
+      grid.innerHTML = all.map((item, idx) => {
+        const isMatch = activeSkillFilter && item.tags.some(t => t.toLowerCase().includes(activeSkillFilter.toLowerCase()));
+        return `
+          <article class="project-card ${isMatch ? 'highlighted' : ''}" data-pidx="${idx}">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
+                <span class="badge mono">${item.badge}</span>
+                ${isMatch ? '<span class="badge" style="background:var(--accent);color:#fff;">★ Skill Match</span>' : ''}
+              </div>
+              <h3 style="font-size:1.08rem;margin-bottom:6px;">${item.title}</h3>
+              <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">${item.summary}</p>
+            </div>
+            <div>
+              <div class="pmi-mini">${item.pmi}</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:0.8rem;font-weight:600;">
+                <span>Inspect Case Study</span>
+                <span>↗</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.project-card').forEach((card, idx) => {
+        card.addEventListener('click', () => {
+          const item = all[idx];
+          document.getElementById('mBadge').textContent = item.badge;
+          document.getElementById('mTitle').textContent = item.title;
+          document.getElementById('mSummary').textContent = item.summary;
+          document.getElementById('mDetails').innerHTML = item.pmi;
+          document.getElementById('mLink').href = item.url;
+          openModal('caseModal');
+        });
+      });
+    }
+
+    document.querySelectorAll('#projectFilters .seg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#projectFilters .seg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeProjectType = btn.dataset.ptype;
+        renderProjects();
+      });
+    });
+
+    // Interactive Skill Chip Filtering
+    document.querySelectorAll('.skill-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const skill = chip.dataset.skill;
+        if (activeSkillFilter === skill) {
+          clearSkillFilter();
+          return;
+        }
+        activeSkillFilter = skill;
+        document.querySelectorAll('.skill-chip').forEach(c => c.classList.toggle('active', c.dataset.skill === skill));
+        document.getElementById('activeSkillBanner').style.display = 'inline-flex';
+        document.getElementById('activeSkillText').textContent = `Highlighted: ${skill}`;
+        say(`Highlighting my work & experience with ${skill}! ✨`);
+        hop();
+        renderProjects();
+
+        document.querySelectorAll('.role-item').forEach(role => {
+          const hasTag = role.dataset.tags.toLowerCase().includes(skill.toLowerCase());
+          role.style.borderColor = hasTag ? 'var(--accent)' : 'var(--border)';
+          role.style.opacity = hasTag ? '1' : '0.62';
+        });
+      });
+    });
+
+    function clearSkillFilter() {
+      activeSkillFilter = null;
+      document.querySelectorAll('.skill-chip').forEach(c => c.classList.remove('active'));
+      document.getElementById('activeSkillBanner').style.display = 'none';
+      document.querySelectorAll('.role-item').forEach(r => {
+        r.style.borderColor = 'var(--border)';
+        r.style.opacity = '1';
+      });
+      renderProjects();
+    }
+
+    document.getElementById('clearSkillBtn').addEventListener('click', clearSkillFilter);
+    syncGitHubRepos();
+
+    // 5. Problem -> Magic -> Impact Transformer
+    const scenarios = [
+      {
+        before: [
+          { tag: '01 • Legacy Bottleneck', title: 'Siloed .pbix Reporting', desc: 'Disconnected files with duplicated DAX logic and zero version history.' },
+          { tag: '02 • Manual Overhead', title: 'Ad-Hoc Updates', desc: 'Fragile manual edits risking broken metrics before leadership reviews.' },
+          { tag: '03 • Governance Gap', title: 'Inconsistent Definitions', desc: 'Multiple teams reporting conflicting numbers for the same KPI.' }
+        ],
+        after: [
+          { tag: '01 • STAR Semantic Core', title: 'Centralized Azure & Power BI', desc: 'Single-source dimensional models tuned with CTEs, views, and indexes.' },
+          { tag: '02 • PBIP + Git CI/CD', title: 'Version-Controlled BI Code', desc: 'Structured developer branching, PR reviews, and AI-assisted DAX checks.' },
+          { tag: '03 • Enterprise Adoption', title: '50+ Analysts Enabled', desc: 'Self-service exploration backed by Row-Level Security & governance.' }
+        ]
+      },
+      {
+        before: [
+          { tag: '01 • Fragile Ingestion', title: 'Silent ETL Refresh Delays', desc: 'Upstream schema changes stall morning pipelines without warning.' },
+          { tag: '02 • Reactive Firefighting', title: 'Slow Root-Cause Hunting', desc: 'Hours lost manually tracing logs across warehouse tables.' },
+          { tag: '03 • Trust Erosion', title: 'Stale Operational Metrics', desc: 'Stakeholders wait on manual fixes before acting on daily trends.' }
+        ],
+        after: [
+          { tag: '01 • Adaptive Pipelines', title: 'Automated Cleansing & Checks', desc: 'Metadata-driven validation catches anomalies before load completion.' },
+          { tag: '02 • Proactive Alerting', title: '50% Faster Resolution', desc: 'Instant root-cause diagnostics cut incident triage time in half.' },
+          { tag: '03 • Data Reliability', title: '+30% Data Accuracy', desc: 'Trusted, on-time refresh SLAs across Snowflake, Azure & SQL.' }
+        ]
+      },
+      {
+        before: [
+          { tag: '01 • Static Reporting', title: 'Rear-View Sales Summaries', desc: 'Historical tables without behavioral segmentation or elasticity signals.' },
+          { tag: '02 • Blind Spots', title: 'Undetected Log Anomalies', desc: 'Volume irregularities buried inside high-volume transaction streams.' },
+          { tag: '03 • Slow Decisions', title: 'Manual Pricing Reviews', desc: 'Commercial teams stitching spreadsheets to evaluate demand shifts.' }
+        ],
+        after: [
+          { tag: '01 • Customer Persona App', title: 'Behavioral & Demand Intelligence', desc: 'Interactive segmentation lifting engagement +20% and sales +15%.' },
+          { tag: '02 • Python Autoencoders', title: 'Embedded Anomaly Alerts', desc: 'ML models flag irregular transaction patterns directly in executive views.' },
+          { tag: '03 • Proactive Strategy', title: 'Market-Driven Agility', desc: 'Commercial pricing teams act on live demand shifts with RLS security.' }
+        ]
+      }
+    ];
+
+    let activeSc = 0;
+
+    function renderTransformer() {
       const val = Number(document.getElementById('magicSlider').value);
-      const isMagic = val >= 50;
-      const sc = scenarios[activeScenario];
-      const nodes = isMagic ? sc.magic : sc.chaos;
+      const isAfter = val >= 50;
+      const list = isAfter ? scenarios[activeSc].after : scenarios[activeSc].before;
 
-      document.getElementById('pipelineStage').innerHTML = nodes.map(n => `
-        <div class="node-box ${isMagic ? 'magic-active' : ''}">
-          <div class="node-tag mono">${n.tag}</div>
-          <h4 style="margin-bottom:6px;font-size:1rem;">${isMagic ? '✨ ' : '🔥 '}${n.title}</h4>
+      document.getElementById('pipelineGrid').innerHTML = list.map(n => `
+        <div class="node-card ${isAfter ? 'magic-on' : ''}">
+          <div class="mono" style="font-size:0.72rem;color:var(--muted);margin-bottom:5px;">${n.tag}</div>
+          <h4 style="font-size:0.98rem;margin-bottom:6px;">${isAfter ? '✨ ' : '🔥 '}${n.title}</h4>
           <p style="font-size:0.84rem;color:var(--muted);">${n.desc}</p>
         </div>
       `).join('');
-
-      document.getElementById('metricClarity').textContent = `${Math.round(18 + val * 0.8)}%`;
-      document.getElementById('metricHours').textContent = isMagic ? sc.hours : '+0.0 hrs';
-      document.getElementById('metricState').textContent = isMagic ? 'TECHNICALLY MAGIC' : 'REACTIVE CHAOS';
     }
 
-    document.getElementById('magicSlider').addEventListener('input', renderMorpher);
-    document.getElementById('castMagicBtn').addEventListener('click', () => {
-      const slider = document.getElementById('magicSlider');
-      slider.value = Number(slider.value) >= 50 ? 15 : 100;
-      renderMorpher();
+    document.getElementById('magicSlider').addEventListener('input', renderTransformer);
+    document.getElementById('toggleMagicBtn').addEventListener('click', () => {
+      const s = document.getElementById('magicSlider');
+      s.value = Number(s.value) >= 50 ? 15 : 95;
+      renderTransformer();
+      hop();
     });
 
     document.querySelectorAll('#scenarioTabs .seg-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('#scenarioTabs .seg-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        activeScenario = Number(btn.dataset.scenario);
-        renderMorpher();
+        activeSc = Number(btn.dataset.sc);
+        renderTransformer();
       });
     });
-    renderMorpher();
+    renderTransformer();
 
-    // 5. 20-Week Heatmap
-    function renderHeatmap(filter = 'all') {
-      const grid = document.getElementById('heatmapGrid');
-      const labels = {
-        dev: 'Shipped utility commit & automated test suite',
-        video: 'Published YouTube deep-dive on @ItsTechnically-Magic',
-        writing: 'Drafted analytics architecture essay on Medium'
-      };
-      const types = ['dev', 'video', 'writing'];
-      let html = '';
-
-      for (let w = 0; w < 20; w++) {
-        html += '<div class="heat-col">';
-        for (let d = 0; d < 7; d++) {
-          const seed = (w * 7 + d * 13) % 5;
-          const type = types[(w + d) % 3];
-          const lvl = filter !== 'all' && filter !== type ? 0 : seed;
-          const msg = lvl === 0 ? 'Rest & recharge day' : `${labels[type]} (Week ${w + 1}, Day ${d + 1})`;
-          html += `<div class="heat-cell" data-lvl="${lvl}" data-msg="${msg}"></div>`;
-        }
-        html += '</div>';
-      }
-      grid.innerHTML = html;
-
-      grid.querySelectorAll('.heat-cell').forEach(cell => {
-        cell.addEventListener('mouseenter', () => {
-          document.getElementById('heatLog').textContent = `✨ ${cell.dataset.msg}`;
-        });
-      });
-    }
-
-    document.querySelectorAll('#heatFilters .seg-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#heatFilters .seg-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderHeatmap(btn.dataset.heat);
-      });
-    });
-    renderHeatmap();
-
-    // 6. Open-Source & Content Lab (Live GitHub API + Curated Content)
-    const curatedContent = [
-      {
-        type: 'video',
-        badge: 'YouTube • @ItsTechnically-Magic',
-        title: 'From Reactive Debugging to Proactive Data Storytelling',
-        desc: 'How to spot root causes fast and build clean data workflows that stay ahead of daily business questions.',
-        details: 'Featured walkthrough on @ItsTechnically-Magic covering root-cause debugging frameworks and repeatable automation habits.',
-        url: 'https://youtube.com/@ItsTechnically-Magic'
-      },
-      {
-        type: 'article',
-        badge: 'Medium • @ItsTechnicallyMagic',
-        title: 'Why Analytics & Innovation Needs Less Busywork and Better Tooling',
-        desc: 'Moving beyond cookie-cutter templates to engineer resilient, scalable solutions.',
-        details: 'Deep-dive essay exploring practical engineering patterns for modern analytics & innovation teams.',
-        url: 'https://medium.com/@ItsTechnicallyMagic'
-      }
-    ];
-
-    let liveRepos = [];
-    let currentFilter = 'all';
-
-    async function fetchGitHubRepos() {
-      const badge = document.getElementById('syncBadge');
-      badge.textContent = 'Syncing GitHub...';
-      try {
-        const res = await fetch('https://api.github.com/users/ItsTechnicallyMagic/repos?sort=updated&per_page=12');
-        if (!res.ok) throw new Error('GitHub API limit or not found yet');
-        const data = await res.json();
-        liveRepos = data
-          .filter(r => r.name.toLowerCase() !== 'itstechnicallymagic')
-          .map(r => ({
-            type: 'repo',
-            badge: `GitHub • ${r.language || 'Open Source'}`,
-            title: r.name,
-            desc: r.description || 'Open-source tool & innovation experiment by @ItsTechnicallyMagic.',
-            details: `Stars: ${r.stargazers_count} • Forks: ${r.forks_count} • Last updated: ${new Date(r.updated_at).toLocaleDateString()}`,
-            url: r.html_url
-          }));
-        badge.textContent = `Live Synced (${liveRepos.length} Repos)`;
-      } catch (err) {
-        liveRepos = [
-          {
-            type: 'repo',
-            badge: 'GitHub • Featured Repo',
-            title: 'PBIP-Decoder',
-            desc: 'Utility for inspecting, decoding, and streamlining project metadata structures.',
-            details: 'Open-source repository under github.com/ItsTechnicallyMagic.',
-            url: 'https://github.com/ItsTechnicallyMagic'
-          },
-          {
-            type: 'repo',
-            badge: 'GitHub • Featured Repo',
-            title: 'PowerBI-migration-toolkit',
-            desc: 'Automation helpers designed to eliminate repetitive manual migration steps.',
-            details: 'Open-source repository under github.com/ItsTechnicallyMagic.',
-            url: 'https://github.com/ItsTechnicallyMagic'
-          }
-        ];
-        badge.textContent = 'GitHub Connected';
-      }
-      renderLab();
-    }
-
-    function renderLab() {
-      const query = document.getElementById('labSearch').value.toLowerCase();
-      const items = [...liveRepos, ...curatedContent].filter(item => {
-        const matchesType = currentFilter === 'all' || item.type === currentFilter;
-        const matchesQuery =
-          item.title.toLowerCase().includes(query) ||
-          item.desc.toLowerCase().includes(query) ||
-          item.badge.toLowerCase().includes(query);
-        return matchesType && matchesQuery;
-      });
-
-      const grid = document.getElementById('labGrid');
-      if (!items.length) {
-        grid.innerHTML = `<p style="color:var(--muted);font-size:0.9rem;">No matching items found. Try clearing your filter!</p>`;
-        return;
-      }
-
-      grid.innerHTML = items.map((item, idx) => `
-        <article class="lab-item" data-idx="${idx}">
-          <div>
-            <span class="badge mono" style="margin-bottom:10px;">${item.badge}</span>
-            <h3 style="font-size:1.08rem;margin-bottom:6px;">${item.title}</h3>
-            <p style="font-size:0.85rem;color:var(--muted);">${item.desc}</p>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;font-weight:600;">
-            <span>Inspect Blueprint</span>
-            <span>↗</span>
-          </div>
-        </article>
-      `).join('');
-
-      grid.querySelectorAll('.lab-item').forEach((el, idx) => {
-        el.addEventListener('click', () => {
-          const item = items[idx];
-          document.getElementById('modalType').textContent = item.badge;
-          document.getElementById('modalTitle').textContent = item.title;
-          document.getElementById('modalDesc').textContent = item.desc;
-          document.getElementById('modalDetails').textContent = item.details;
-          document.getElementById('modalLink').href = item.url;
-          openModal('inspectorModal');
-        });
-      });
-    }
-
-    document.querySelectorAll('#labFilters .seg-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#labFilters .seg-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentFilter = btn.dataset.filter;
-        renderLab();
-      });
-    });
-
-    document.getElementById('labSearch').addEventListener('input', renderLab);
-    document.getElementById('refreshReposBtn').addEventListener('click', fetchGitHubRepos);
-    fetchGitHubRepos();
-
-    // 7. Modals & Keyboard Shortcuts
+    // 6. Modals & Updated README Generator
     function openModal(id) { document.getElementById(id).classList.add('open'); }
     function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
     document.getElementById('openCmdBtn').addEventListener('click', () => openModal('cmdModal'));
     document.getElementById('dockCmdBtn').addEventListener('click', () => openModal('cmdModal'));
 
-    const readmeMarkdown = `<div align="center">
+    const updatedReadme = `<div align="center">
   <h1>✨ It's Technically Magic</h1>
-  <p><strong>Sanjana Putchala</strong> • Analytics & Innovation Developer</p>
+  <p><strong>Sanjana Putchala</strong> • Senior BI & Analytics Solutions Architect | Analytics & Innovation</p>
   <p>
-    <a href="https://itstechnicallymagic.github.io">Interactive Website</a> •
-    <a href="https://youtube.com/@ItsTechnically-Magic">YouTube</a> •
-    <a href="https://medium.com/@ItsTechnicallyMagic">Medium</a> •
-    <a href="https://www.linkedin.com/in/itstechnicallymagic">LinkedIn</a>
+    <a href="https://itstechnicallymagic.github.io">Interactive Portfolio</a> •
+    <a href="https://www.linkedin.com/in/sanjanaputchala/">LinkedIn</a> •
+    <a href="https://www.youtube.com/@ItsTechnically-Magic">YouTube</a> •
+    <a href="https://medium.com/@sanjana.putchala">Medium</a>
   </p>
 </div>
 
-Turning messy data problems into smart solutions, automations & proactive storytelling.`;
+### 👋 About Me
+Analytics & Innovation developer with **7+ years** modernizing enterprise BI architectures, automating data pipelines, and applying machine learning across energy, fintech, and global operations.
 
-    document.getElementById('readmeCode').textContent = readmeMarkdown;
+### 🚀 Spotlight Work
+- **[PBIP-Decoder](https://github.com/ItsTechnicallyMagic/PBIP-Decoder)** — Unlocking Git CI/CD and dependency audits for Power BI Projects.
+- **[PowerBI-migration-toolkit](https://github.com/ItsTechnicallyMagic/PowerBI-migration-toolkit)** — Streamlining legacy-to-cloud reporting migrations.
+- **[Build Adaptive Data Pipelines for Future-Proof Analytics](https://medium.com/@sanjana.putchala)** — Featured on Medium & DataCamp.`;
+
+    document.getElementById('readmeCode').textContent = updatedReadme;
     document.getElementById('openReadmeBtn').addEventListener('click', () => openModal('readmeModal'));
     document.getElementById('copyReadmeBtn').addEventListener('click', () => {
-      navigator.clipboard.writeText(readmeMarkdown);
+      navigator.clipboard.writeText(updatedReadme);
       document.getElementById('copyReadmeBtn').textContent = '✅ Copied!';
       setTimeout(() => (document.getElementById('copyReadmeBtn').textContent = '📋 Copy Markdown'), 1800);
     });
 
     document.querySelectorAll('.modal-backdrop').forEach(bg => {
-      bg.addEventListener('click', e => {
-        if (e.target === bg) bg.classList.remove('open');
-      });
+      bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open'); });
     });
 
     window.addEventListener('keydown', e => {
