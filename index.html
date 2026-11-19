@@ -415,7 +415,83 @@
     }
 
     /* ==========================================================================
-       4. HORIZON & MODAL ANIMATIONS
+       4. MOBILE-FIRST SWIPEABLE CAROUSEL PHYSICS & DIRECTIONAL ANIMATIONS
+       ========================================================================== */
+    @keyframes slideEnterFromRight {
+      0% {
+        opacity: 0.25;
+        transform: translateX(38px) scale(0.99);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0px) scale(1);
+      }
+    }
+
+    @keyframes slideEnterFromLeft {
+      0% {
+        opacity: 0.25;
+        transform: translateX(-38px) scale(0.99);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0px) scale(1);
+      }
+    }
+
+    .spotlight-carousel-stage {
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: grab;
+      position: relative;
+    }
+
+    .spotlight-carousel-stage.is-dragging {
+      cursor: grabbing;
+    }
+
+    .spotlight-carousel-stage img {
+      -webkit-user-drag: none;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .spotlight-track {
+      will-change: transform, opacity;
+      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+    }
+
+    .spotlight-track.dragging {
+      transition: none !important;
+    }
+
+    .spotlight-track.enter-from-right {
+      animation: slideEnterFromRight 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .spotlight-track.enter-from-left {
+      animation: slideEnterFromLeft 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .carousel-nav-btn {
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .carousel-nav-btn.edge-nudge-left {
+      transform: translateX(-3px) scale(1.08);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .carousel-nav-btn.edge-nudge-right {
+      transform: translateX(3px) scale(1.08);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* ==========================================================================
+       5. HORIZON, MOBILE EVOLUTION CHART & MODAL ANIMATIONS
        ========================================================================== */
     @keyframes haloPulse {
       0%, 100% { transform: scale(1); opacity: 0.55; }
@@ -426,6 +502,29 @@
       transform-box: fill-box;
       transform-origin: center;
       animation: haloPulse 2.6s ease-out infinite;
+    }
+
+    .evo-reflection-card {
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .evo-reflection-body {
+      will-change: transform, opacity;
+      transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.26s ease;
+    }
+
+    .evo-reflection-body.dragging {
+      transition: none !important;
+    }
+
+    .evo-reflection-body.enter-from-right {
+      animation: slideEnterFromRight 0.34s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .evo-reflection-body.enter-from-left {
+      animation: slideEnterFromLeft 0.34s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     .modal-backdrop {
@@ -826,9 +925,14 @@
           </p>
         </div>
 
-        <!-- Accessible Horizontal Elevation Line Chart SVG with Labeled Altitude Gridlines -->
-        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] p-4 sm:p-6 overflow-x-auto">
-          <div class="min-w-[780px]">
+        <!-- Mobile Interactive Vertical Elevation Chart (Zero Horizontal Scrollbars) -->
+        <div id="evolutionMobileChart" class="md:hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] p-3.5 sm:p-4 space-y-2.5" aria-label="Technical Climb from Foundations to Innovation">
+          <!-- Populated cleanly via renderEvolutionMobile() -->
+        </div>
+
+        <!-- Desktop Accessible Horizontal Elevation Line Chart SVG with Labeled Altitude Gridlines -->
+        <div class="hidden md:block rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] p-6">
+          <div>
             <svg id="evolutionSvg" viewBox="0 0 1040 275" class="w-full h-auto overflow-visible" aria-label="Technical Climb from Foundations to Innovation">
               <defs>
                 <linearGradient id="evoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -875,38 +979,45 @@
           </div>
         </div>
 
-        <!-- Three Narrative Reflection Cards Below (No Previous/Next Buttons) -->
-        <div class="p-6 sm:p-7 rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-solid)] space-y-5">
-          <div class="space-y-1 pb-4 border-b border-[var(--border)]">
-            <div class="flex flex-wrap items-center gap-2.5">
-              <span id="evoStageBadge" class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-[var(--accent-soft)]" style="color: var(--accent);">INNOVATION ALTITUDE</span>
-              <span id="evoSubtitle" class="text-xs font-mono font-semibold text-[var(--muted)]">PBIP CI/CD, AI Copilots &amp; Scalable Data Products</span>
-            </div>
-            <h3 id="evoTitle" class="text-xl sm:text-2xl font-extrabold">
-              Analytics Innovation
-            </h3>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] space-y-1.5">
-              <div class="text-[11px] font-mono uppercase tracking-wider font-bold" style="color: var(--accent);">
-                💭 The Question I Asked
+        <!-- Three Narrative Reflection Cards Below (Swipeable on Mobile) -->
+        <div id="evoReflectionCard" class="evo-reflection-card p-5 sm:p-7 rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-solid)] overflow-hidden">
+          <div id="evoReflectionBody" class="evo-reflection-body space-y-5">
+            <div class="space-y-1.5 pb-4 border-b border-[var(--border)]">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span id="evoStageBadge" class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-[var(--accent-soft)]" style="color: var(--accent);">INNOVATION ALTITUDE</span>
+                  <span id="evoSubtitle" class="text-xs font-mono font-semibold text-[var(--muted)]">PBIP CI/CD, AI Copilots &amp; Scalable Data Products</span>
+                </div>
+                <span id="evoMobileCounter" class="md:hidden text-[11px] font-mono px-2.5 py-0.5 rounded-full border border-[var(--border)] bg-[var(--surface-tile)] text-[var(--muted)]">
+                  5 / 5 • Tap chart or swipe
+                </span>
               </div>
-              <p id="evoQuestion" class="text-sm font-medium text-[var(--text)] leading-relaxed"></p>
+              <h3 id="evoTitle" class="text-xl sm:text-2xl font-extrabold">
+                Analytics Innovation
+              </h3>
             </div>
 
-            <div class="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] space-y-1.5">
-              <div class="text-[11px] font-mono uppercase tracking-wider font-bold" style="color: var(--accent-2);">
-                🎩 The Hat I Wore
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] space-y-1.5">
+                <div class="text-[11px] font-mono uppercase tracking-wider font-bold" style="color: var(--accent);">
+                  💭 The Question I Asked
+                </div>
+                <p id="evoQuestion" class="text-sm font-medium text-[var(--text)] leading-relaxed"></p>
               </div>
-              <p id="evoHat" class="text-sm text-[var(--muted)] leading-relaxed"></p>
-            </div>
 
-            <div class="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] space-y-1.5">
-              <div class="text-[11px] font-mono uppercase tracking-wider font-bold" style="color: var(--accent-3);">
-                🔭 How My Perspective Expanded
+              <div class="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] space-y-1.5">
+                <div class="text-[11px] font-mono uppercase tracking-wider font-bold" style="color: var(--accent-2);">
+                  🎩 The Hat I Wore
+                </div>
+                <p id="evoHat" class="text-sm text-[var(--muted)] leading-relaxed"></p>
               </div>
-              <p id="evoPerspective" class="text-sm text-[var(--muted)] leading-relaxed"></p>
+
+              <div class="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] space-y-1.5">
+                <div class="text-[11px] font-mono uppercase tracking-wider font-bold" style="color: var(--accent-3);">
+                  🔭 How My Perspective Expanded
+                </div>
+                <p id="evoPerspective" class="text-sm text-[var(--muted)] leading-relaxed"></p>
+              </div>
             </div>
           </div>
         </div>
@@ -914,7 +1025,7 @@
     </section>
 
     <!-- ========================================================================
-         4. SPOTLIGHT PROJECTS CAROUSEL (AUTO-SYNCING GITHUB, MEDIUM & YOUTUBE)
+         4. SPOTLIGHT PROJECTS CAROUSEL (SWIPEABLE + AUTO-SYNCING GITHUB, MEDIUM & YOUTUBE)
          ======================================================================== -->
     <section id="spotlight" class="editorial-card p-6 sm:p-9">
       <div class="relative z-10 space-y-5">
@@ -952,7 +1063,7 @@
           </div>
         </div>
 
-        <!-- Active Filter Indicator Badge + Platform SVG Icon + Slide Counter + Arrows -->
+        <!-- Active Filter Indicator Badge + Platform SVG Icon + Slide Counter + Touch-Friendly Arrows -->
         <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)]">
           <div class="flex items-center gap-2.5">
             <span id="carouselPlatformIcon" class="w-8 h-8 rounded-xl bg-[var(--accent-soft)] grid place-items-center shrink-0" style="color: var(--accent);"></span>
@@ -966,24 +1077,31 @@
             <span id="carouselCounter" class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-[var(--surface-solid)] border border-[var(--border-strong)]">
               1 / 6
             </span>
-            <div class="flex items-center gap-1.5">
-              <button onclick="prevSpotlightSlide()" class="w-8 h-8 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-solid)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] grid place-items-center text-xs font-bold transition" aria-label="Previous Project">
+            <div class="flex items-center gap-2">
+              <button id="prevSlideBtn" onclick="prevSpotlightSlide('button')" class="carousel-nav-btn w-9 h-9 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-solid)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] grid place-items-center text-sm font-bold" aria-label="Previous Project">
                 ←
               </button>
-              <button onclick="nextSpotlightSlide()" class="w-8 h-8 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-solid)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] grid place-items-center text-xs font-bold transition" aria-label="Next Project">
+              <button id="nextSlideBtn" onclick="nextSpotlightSlide('button')" class="carousel-nav-btn w-9 h-9 rounded-xl border border-[var(--border-strong)] bg-[var(--surface-solid)] hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] grid place-items-center text-sm font-bold" aria-label="Next Project">
                 →
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Single-Slide Horizontal Carousel Stage -->
-        <div id="spotlightCarouselStage" class="rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] overflow-hidden">
+        <!-- Swipeable Single-Slide Horizontal Carousel Stage -->
+        <div id="spotlightCarouselStage" class="spotlight-carousel-stage rounded-2xl border border-[var(--border)] bg-[var(--surface-tile)] overflow-hidden">
           <!-- Populated cleanly via renderSpotlightCarousel() -->
         </div>
 
-        <!-- Clickable Pagination Dots -->
-        <div id="carouselDots" class="flex flex-wrap items-center justify-center gap-2 pt-1">
+        <!-- Mobile-Only Swipe Discovery Cue Badge (md:hidden) -->
+        <div class="md:hidden flex justify-center">
+          <span id="mobileSwipeCue" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono border border-[var(--border)] bg-[var(--surface-tile)] text-[var(--muted)] transition-colors duration-300">
+            ↔ Swipe left or right to browse
+          </span>
+        </div>
+
+        <!-- Accessible Tap-Target Pagination Dots -->
+        <div id="carouselDots" class="flex flex-wrap items-center justify-center gap-1">
           <!-- Populated cleanly via renderSpotlightCarousel() -->
         </div>
       </div>
@@ -1300,7 +1418,7 @@
   </aside>
 
   <!-- ==========================================================================
-       7. MODALS: SPOTLIGHT BLUEPRINT INSPECTOR & GITHUB README GENERATOR
+       7. MODAL: SPOTLIGHT BLUEPRINT INSPECTOR
        ========================================================================== -->
   <div id="blueprintModal" class="modal-backdrop">
     <div class="w-full max-w-2xl rounded-3xl bg-[var(--surface-solid)] border border-[var(--border-strong)] p-6 sm:p-7 shadow-2xl space-y-5">
@@ -1342,7 +1460,7 @@
   <div id="toastBox" class="fixed top-6 right-6 z-50 pointer-events-none flex flex-col gap-2"></div>
 
   <!-- ==========================================================================
-       JAVASCRIPT: FIREFLY JAR, ELEVATION ARC, LIVE FEED CAROUSEL & BUTTERFLY
+       JAVASCRIPT: FIREFLY JAR, ELEVATION ARC, SWIPEABLE CAROUSEL & BUTTERFLY
        ========================================================================== -->
   <script>
     /* --------------------------------------------------------------------------
@@ -1404,7 +1522,7 @@
     const BUTTERFLY_INSIGHTS = [
       'With over a decade of experience across energy, fintech, and global operations, I bring together business intelligence, data engineering, automation, and applied machine learning.',
       'Hover or click any glowing firefly inside the apothecary jar to explore how I connect executive BI storytelling, applied machine learning, semantic governance, cloud engineering, and query craft.',
-      'Browse Spotlight Projects to explore open source utilities like PBIP-Decoder and PowerBI-migration-toolkit alongside live Medium articles and YouTube tutorials.',
+      'Swipe left or right on Spotlight Projects to explore open source utilities like PBIP-Decoder and PowerBI-migration-toolkit alongside live Medium articles and YouTube tutorials.',
       'Read my featured Medium and DataCamp essay on building adaptive data pipelines for future proof analytics.',
       'Connect directly on LinkedIn or watch practical walkthroughs on YouTube @ItsTechnically-Magic.'
     ];
@@ -1505,7 +1623,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       4. CAPABILITY FIREFLY JAR & SPOTLIGHT DETAIL PANEL (NO TIER NUMBERS)
+       4. CAPABILITY FIREFLY JAR & SPOTLIGHT DETAIL PANEL
        -------------------------------------------------------------------------- */
     const CAPABILITY_DOMAINS = [
       {
@@ -1808,7 +1926,99 @@
       }
     }
 
-    function selectEvolutionStage(idx) {
+    function renderEvolutionMobile() {
+      try {
+        const container = document.getElementById('evolutionMobileChart');
+        if (!container) return;
+
+        const barHeights = ['h-1.5', 'h-2', 'h-2.5', 'h-3', 'h-3.5'];
+
+        const rowsHtml = EVOLUTION_STAGES.map((item, idx) => {
+          const isReached = idx <= currentEvolutionIndex;
+          const isCurrent = idx === currentEvolutionIndex;
+          const isFirst = idx === 0;
+          const isLast = idx === EVOLUTION_STAGES.length - 1;
+          const altitudeName = item.badge.replace(' ALTITUDE', '');
+          const level = idx + 1;
+
+          const topSegmentColor = isReached ? 'var(--accent)' : 'var(--border-strong)';
+          const bottomSegmentColor = idx < currentEvolutionIndex ? 'var(--accent)' : 'var(--border-strong)';
+
+          const barsHtml = [1, 2, 3, 4, 5]
+            .map((barLevel, bIdx) => {
+              const filled = barLevel <= level;
+              const barClass = filled
+                ? isCurrent
+                  ? 'accent-bg'
+                  : 'bg-[var(--accent)] opacity-75'
+                : 'bg-[var(--border-strong)]';
+              return `<span class="w-1 ${barHeights[bIdx]} rounded-full transition-colors ${barClass}"></span>`;
+            })
+            .join('');
+
+          return `
+            <button type="button"
+              onclick="selectEvolutionStage(${idx})"
+              class="w-full min-h-[56px] relative flex items-center gap-3 px-2.5 py-2.5 rounded-xl border text-left transition-all ${
+                isCurrent
+                  ? 'border-[var(--accent)] bg-[var(--surface-solid)] shadow-sm'
+                  : 'border-transparent hover:border-[var(--border)] bg-transparent'
+              }"
+              aria-pressed="${isCurrent}"
+              aria-label="${item.title} (${altitudeName})">
+              <!-- Continuous Vertical SVG Elevation Spine & Pulsing Node -->
+              <div class="w-7 self-stretch relative flex items-center justify-center shrink-0">
+                ${!isFirst ? `<span class="absolute top-0 h-1/2 w-[2.5px]" style="background: ${topSegmentColor};"></span>` : ''}
+                ${!isLast ? `<span class="absolute bottom-0 h-1/2 w-[2.5px]" style="background: ${bottomSegmentColor};"></span>` : ''}
+                <svg width="28" height="28" viewBox="0 0 28 28" class="relative z-10 overflow-visible" aria-hidden="true">
+                  ${isCurrent ? `<circle cx="14" cy="14" r="13" fill="var(--accent)" class="node-halo-pulse" />` : ''}
+                  <circle cx="14" cy="14" r="${isCurrent ? 10 : 7.5}"
+                    fill="${isReached ? 'var(--surface-solid)' : 'var(--surface-tile)'}"
+                    stroke="${isReached ? 'var(--accent)' : 'var(--border-strong)'}"
+                    stroke-width="${isCurrent ? 3 : 2}" />
+                  <circle cx="14" cy="14" r="${isCurrent ? 4.2 : 2.8}"
+                    fill="${isReached ? 'var(--accent-2)' : 'var(--muted)'}" />
+                </svg>
+              </div>
+
+              <!-- Milestone Title & Tech Subtitle -->
+              <div class="min-w-0 flex-1">
+                <div class="font-display text-[13.5px] leading-snug break-words ${isCurrent ? 'font-extrabold text-[var(--text)]' : 'font-semibold text-[var(--muted)]'}">
+                  ${item.shortLabel}
+                </div>
+                <div class="font-mono text-[11px] leading-tight mt-0.5 truncate" style="color: ${isCurrent ? 'var(--accent)' : 'var(--muted)'};">
+                  ${item.subLabel}
+                </div>
+              </div>
+
+              <!-- 5-Bar Altitude Meter & Altitude Tag -->
+              <div class="shrink-0 flex flex-col items-end gap-1 pl-1">
+                <div class="flex items-end gap-0.5 h-3.5" aria-hidden="true">
+                  ${barsHtml}
+                </div>
+                <span class="font-mono text-[9px] font-bold tracking-wider" style="color: ${isCurrent ? 'var(--accent)' : 'var(--muted)'};">
+                  ${altitudeName}
+                </span>
+              </div>
+            </button>
+          `;
+        }).join('');
+
+        container.innerHTML = `
+          <div class="flex items-center justify-between gap-2 px-1 pb-1 border-b border-[var(--border)] text-[10.5px] font-mono text-[var(--muted)]">
+            <span>ELEVATION TRAJECTORY</span>
+            <span style="color: var(--accent);">TAP ANY MILESTONE</span>
+          </div>
+          <div class="space-y-1">
+            ${rowsHtml}
+          </div>
+        `;
+      } catch (err) {
+        console.error('Evolution mobile render error:', err);
+      }
+    }
+
+    function selectEvolutionStage(idx, direction = 'none') {
       try {
         currentEvolutionIndex = idx;
         const stage = EVOLUTION_STAGES[idx] || EVOLUTION_STAGES[4];
@@ -1819,6 +2029,8 @@
         const qEl = document.getElementById('evoQuestion');
         const hatEl = document.getElementById('evoHat');
         const perspEl = document.getElementById('evoPerspective');
+        const mobileCounterEl = document.getElementById('evoMobileCounter');
+        const bodyEl = document.getElementById('evoReflectionBody');
 
         if (badgeEl) badgeEl.textContent = stage.badge;
         if (subEl) subEl.textContent = stage.subtitle;
@@ -1826,15 +2038,136 @@
         if (qEl) qEl.textContent = stage.question;
         if (hatEl) hatEl.textContent = stage.hat;
         if (perspEl) perspEl.textContent = stage.perspective;
+        if (mobileCounterEl) {
+          mobileCounterEl.textContent = `${idx + 1} / ${EVOLUTION_STAGES.length} • Tap chart or swipe`;
+        }
+
+        if (bodyEl) {
+          bodyEl.classList.remove('enter-from-right', 'enter-from-left', 'dragging');
+          bodyEl.style.transform = '';
+          bodyEl.style.opacity = '';
+          if (direction === 'next' || direction === 'prev') {
+            void bodyEl.offsetWidth;
+            bodyEl.classList.add(direction === 'next' ? 'enter-from-right' : 'enter-from-left');
+          }
+        }
 
         renderEvolutionSvg();
+        renderEvolutionMobile();
       } catch (err) {
         console.error('Evolution stage select error:', err);
       }
     }
 
+    function initEvolutionSwipe() {
+      try {
+        const cardEl = document.getElementById('evoReflectionCard');
+        if (!cardEl) return;
+
+        let startX = 0;
+        let startY = 0;
+        let startTime = 0;
+        let currentDeltaX = 0;
+        let isTracking = false;
+        let isHorizontalSwipe = null;
+
+        function resetBodyPosition() {
+          const bodyEl = document.getElementById('evoReflectionBody');
+          if (!bodyEl) return;
+          bodyEl.classList.remove('dragging');
+          bodyEl.style.transform = 'translateX(0px)';
+          bodyEl.style.opacity = '1';
+        }
+
+        cardEl.addEventListener(
+          'touchstart',
+          (e) => {
+            if (e.touches.length !== 1) return;
+            const t = e.touches[0];
+            startX = t.clientX;
+            startY = t.clientY;
+            startTime = performance.now();
+            currentDeltaX = 0;
+            isTracking = true;
+            isHorizontalSwipe = null;
+          },
+          { passive: true }
+        );
+
+        cardEl.addEventListener(
+          'touchmove',
+          (e) => {
+            if (!isTracking || e.touches.length !== 1) return;
+            const t = e.touches[0];
+            const dx = t.clientX - startX;
+            const dy = t.clientY - startY;
+
+            if (isHorizontalSwipe === null) {
+              if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+              isHorizontalSwipe = Math.abs(dx) > Math.abs(dy);
+              if (!isHorizontalSwipe) {
+                isTracking = false;
+                return;
+              }
+            }
+
+            if (isHorizontalSwipe) {
+              if (e.cancelable) e.preventDefault();
+              currentDeltaX = dx;
+              const bodyEl = document.getElementById('evoReflectionBody');
+              if (bodyEl) {
+                bodyEl.classList.add('dragging');
+                const dampedDx = dx * 0.72;
+                const opacity = 1 - Math.min(Math.abs(dx) / 850, 0.2);
+                bodyEl.style.transform = `translateX(${dampedDx.toFixed(1)}px)`;
+                bodyEl.style.opacity = opacity.toFixed(3);
+              }
+            }
+          },
+          { passive: false }
+        );
+
+        cardEl.addEventListener(
+          'touchend',
+          () => {
+            if (!isTracking && isHorizontalSwipe !== true) return;
+            const wasHorizontal = isHorizontalSwipe === true;
+            const dx = currentDeltaX;
+            const elapsedMs = Math.max(performance.now() - startTime, 1);
+            const velocity = Math.abs(dx) / elapsedMs;
+
+            isTracking = false;
+            isHorizontalSwipe = null;
+
+            if (wasHorizontal && (Math.abs(dx) > 46 || (Math.abs(dx) > 22 && velocity > 0.35))) {
+              const total = EVOLUTION_STAGES.length;
+              if (dx < 0) {
+                const nextIdx = (currentEvolutionIndex + 1) % total;
+                selectEvolutionStage(nextIdx, 'next');
+              } else {
+                const prevIdx = (currentEvolutionIndex - 1 + total) % total;
+                selectEvolutionStage(prevIdx, 'prev');
+              }
+              return;
+            }
+
+            resetBodyPosition();
+          },
+          { passive: true }
+        );
+
+        cardEl.addEventListener('touchcancel', () => {
+          isTracking = false;
+          isHorizontalSwipe = null;
+          resetBodyPosition();
+        });
+      } catch (err) {
+        console.error('Evolution swipe init error:', err);
+      }
+    }
+
     /* --------------------------------------------------------------------------
-       6. SPOTLIGHT PROJECTS CAROUSEL (AUTO-SYNCING GITHUB, MEDIUM & YOUTUBE)
+       6. SPOTLIGHT PROJECTS CAROUSEL (SWIPEABLE + AUTO-SYNCING GITHUB, MEDIUM & YOUTUBE)
        -------------------------------------------------------------------------- */
     const FILTER_META = {
       all: {
@@ -1974,6 +2307,7 @@
           <img
             src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg"
             alt="${safeLabel}"
+            draggable="false"
             onerror="this.parentElement.innerHTML=PRODUCT_BANNERS.youtubeFallback"
             class="w-full h-full min-h-[215px] object-cover transition-transform duration-300 group-hover:scale-105"
           />
@@ -1998,6 +2332,7 @@
           <img
             src="${imgUrl}"
             alt="${safeTitle}"
+            draggable="false"
             onerror="this.parentElement.innerHTML=PRODUCT_BANNERS.mediumEssay"
             class="w-full h-full min-h-[215px] object-cover transition-transform duration-300 group-hover:scale-105"
           />
@@ -2098,6 +2433,8 @@
     let allSpotlightItems = [...SEEDED_SPOTLIGHT_ITEMS];
     let currentSpotlightFilter = 'all';
     let currentCarouselIndex = 0;
+    let hasSwipedSpotlight = false;
+    let suppressSlideClick = false;
 
     function normalizeSlug(str) {
       return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -2228,7 +2565,7 @@
         /* Continue to XML fallback */
       }
 
-      // Method B: Full Raw RSS XML via allorigins + DOMParser (captures every published article in feed)
+      // Method B: Full Raw RSS XML via allorigins + DOMParser
       try {
         const xmlText = await fetchTextViaProxy(mediumFeedUrl);
         if (xmlText && xmlText.includes('<item>')) {
@@ -2392,14 +2729,14 @@
           mergedMap.set(item.dedupeKey, { ...item });
         });
 
-        // Merge GitHub repos (append any newly created public repos)
+        // Merge GitHub repos
         ghItems.forEach((repo) => {
           if (!mergedMap.has(repo.dedupeKey)) {
             mergedMap.set(repo.dedupeKey, repo);
           }
         });
 
-        // Merge all Medium articles (update URL/cover on existing essay if matched, append all other Medium essays)
+        // Merge all Medium articles
         mediumItems.forEach((article) => {
           if (mergedMap.has(article.dedupeKey)) {
             const existing = mergedMap.get(article.dedupeKey);
@@ -2409,7 +2746,7 @@
           }
         });
 
-        // Merge all YouTube channel videos (enrich seeded videos with live date/title if matched, append all new channel videos)
+        // Merge all YouTube channel videos
         ytItems.forEach((video) => {
           if (mergedMap.has(video.dedupeKey)) {
             const existing = mergedMap.get(video.dedupeKey);
@@ -2424,7 +2761,7 @@
         if (statusEl) {
           statusEl.textContent = `${allSpotlightItems.length} Live Items Synced ✓`;
         }
-        renderSpotlightCarousel();
+        renderSpotlightCarousel('none');
 
         if (manualTrigger) {
           showToast(`Synced ${allSpotlightItems.length} items across GitHub, Medium & YouTube!`);
@@ -2456,33 +2793,53 @@
           }
         });
 
-        renderSpotlightCarousel();
+        renderSpotlightCarousel('none');
       } catch (err) {
         console.error('Spotlight filter error:', err);
       }
     }
 
-    function prevSpotlightSlide() {
-      const items = getFilteredSpotlightItems();
-      if (!items.length) return;
-      currentCarouselIndex = (currentCarouselIndex - 1 + items.length) % items.length;
-      renderSpotlightCarousel();
+    function acknowledgeMobileSwipe() {
+      if (hasSwipedSpotlight) return;
+      hasSwipedSpotlight = true;
+      const cueEl = document.getElementById('mobileSwipeCue');
+      if (cueEl) {
+        cueEl.textContent = '✓ Swiping active';
+        cueEl.style.borderColor = 'var(--accent)';
+        cueEl.style.background = 'var(--accent-soft)';
+        cueEl.style.color = 'var(--text)';
+      }
     }
 
-    function nextSpotlightSlide() {
+    function prevSpotlightSlide(source = 'button') {
       const items = getFilteredSpotlightItems();
       if (!items.length) return;
+      if (source === 'swipe') acknowledgeMobileSwipe();
+      currentCarouselIndex = (currentCarouselIndex - 1 + items.length) % items.length;
+      renderSpotlightCarousel('prev');
+    }
+
+    function nextSpotlightSlide(source = 'button') {
+      const items = getFilteredSpotlightItems();
+      if (!items.length) return;
+      if (source === 'swipe') acknowledgeMobileSwipe();
       currentCarouselIndex = (currentCarouselIndex + 1) % items.length;
-      renderSpotlightCarousel();
+      renderSpotlightCarousel('next');
     }
 
     function goToSpotlightSlide(idx) {
+      if (idx === currentCarouselIndex) return;
+      const direction = idx > currentCarouselIndex ? 'next' : 'prev';
       currentCarouselIndex = idx;
-      renderSpotlightCarousel();
+      renderSpotlightCarousel(direction);
     }
 
     function openBlueprintModal(idx) {
       try {
+        if (suppressSlideClick) {
+          suppressSlideClick = false;
+          return;
+        }
         const items = getFilteredSpotlightItems();
         const item = items[idx];
         if (!item) return;
@@ -2501,7 +2858,7 @@
       }
     }
 
-    function renderSpotlightCarousel() {
+    function renderSpotlightCarousel(direction = 'none') {
       try {
         const items = getFilteredSpotlightItems();
         const meta = FILTER_META[currentSpotlightFilter] || FILTER_META.all;
@@ -2535,52 +2892,254 @@
         const item = items[currentCarouselIndex];
         counterEl.textContent = `${currentCarouselIndex + 1} / ${items.length}`;
 
+        const animClass =
+          direction === 'next'
+            ? 'enter-from-right'
+            : direction === 'prev'
+              ? 'enter-from-left'
+              : '';
+
         stageEl.innerHTML = `
-          <article class="grid grid-cols-1 lg:grid-cols-12 items-stretch">
-            <div class="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-[var(--border)] bg-[var(--surface-solid)] overflow-hidden flex items-center justify-center">
-              ${item.bannerHtml}
-            </div>
-
-            <div class="lg:col-span-7 p-6 sm:p-7 flex flex-col justify-between gap-4">
-              <div class="space-y-3">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[var(--accent-soft)]" style="color: var(--accent);">
-                    ${item.badge}
-                  </span>
-                </div>
-
-                <h3 class="font-display font-bold text-xl sm:text-2xl leading-snug">${item.title}</h3>
-                <p class="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">${item.summary}</p>
-
-                <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-solid)] space-y-2 text-xs sm:text-[13px]">
-                  <div><strong style="color: var(--accent);">Problem:</strong> <span class="text-[var(--muted)]">${item.problem}</span></div>
-                  <div><strong style="color: var(--accent-2);">Magic:</strong> <span class="text-[var(--muted)]">${item.magic}</span></div>
-                  <div><strong style="color: var(--accent-3);">Impact:</strong> <span class="text-[var(--muted)]">${item.impact}</span></div>
-                </div>
+          <div id="spotlightCarouselTrack" class="spotlight-track ${animClass}">
+            <article class="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+              <div class="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-[var(--border)] bg-[var(--surface-solid)] overflow-hidden flex items-center justify-center">
+                ${item.bannerHtml}
               </div>
 
-              <div class="pt-1 flex items-center justify-between gap-3">
-                <button type="button" onclick="openBlueprintModal(${currentCarouselIndex})" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-white accent-bg shadow-sm hover:opacity-95 transition">
-                  <span>Open Full Blueprint</span>
-                  <span>↗</span>
-                </button>
+              <div class="lg:col-span-7 p-6 sm:p-7 flex flex-col justify-between gap-4">
+                <div class="space-y-3">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[var(--accent-soft)]" style="color: var(--accent);">
+                      ${item.badge}
+                    </span>
+                  </div>
+
+                  <h3 class="font-display font-bold text-xl sm:text-2xl leading-snug">${item.title}</h3>
+                  <p class="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">${item.summary}</p>
+
+                  <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-solid)] space-y-2 text-xs sm:text-[13px]">
+                    <div><strong style="color: var(--accent);">Problem:</strong> <span class="text-[var(--muted)]">${item.problem}</span></div>
+                    <div><strong style="color: var(--accent-2);">Magic:</strong> <span class="text-[var(--muted)]">${item.magic}</span></div>
+                    <div><strong style="color: var(--accent-3);">Impact:</strong> <span class="text-[var(--muted)]">${item.impact}</span></div>
+                  </div>
+                </div>
+
+                <div class="pt-1 flex items-center justify-between gap-3">
+                  <button type="button" onclick="openBlueprintModal(${currentCarouselIndex})" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-white accent-bg shadow-sm hover:opacity-95 transition">
+                    <span>Open Full Blueprint</span>
+                    <span>↗</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
         `;
 
         dotsEl.innerHTML = items
           .map(
             (_, idx) => `
             <button type="button" onclick="goToSpotlightSlide(${idx})"
-              class="h-2 rounded-full transition-all ${idx === currentCarouselIndex ? 'w-7 accent-bg' : 'w-2 bg-[var(--border-strong)] hover:bg-[var(--muted)]'}"
+              class="py-2 px-1 group flex items-center justify-center focus:outline-none"
               aria-label="Go to slide ${idx + 1}">
+              <span class="block h-2 rounded-full transition-all ${idx === currentCarouselIndex ? 'w-7 accent-bg' : 'w-2 bg-[var(--border-strong)] group-hover:bg-[var(--muted)]'}"></span>
             </button>
           `
           )
           .join('');
       } catch (err) {
         console.error('Spotlight carousel render error:', err);
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       6B. NATIVE-FEELING TOUCH & POINTER SWIPE PHYSICS FOR SPOTLIGHT CAROUSEL
+       -------------------------------------------------------------------------- */
+    function initSpotlightSwipe() {
+      try {
+        const stageEl = document.getElementById('spotlightCarouselStage');
+        if (!stageEl) return;
+
+        let startX = 0;
+        let startY = 0;
+        let startTime = 0;
+        let currentDeltaX = 0;
+        let isTracking = false;
+        let isHorizontalSwipe = null; // null = undecided, true = locked horizontal, false = vertical scroll
+
+        function clearEdgeNudges() {
+          const prevBtn = document.getElementById('prevSlideBtn');
+          const nextBtn = document.getElementById('nextSlideBtn');
+          if (prevBtn) prevBtn.classList.remove('edge-nudge-left');
+          if (nextBtn) nextBtn.classList.remove('edge-nudge-right');
+        }
+
+        function applyDragTransform(dx) {
+          const trackEl = document.getElementById('spotlightCarouselTrack');
+          if (!trackEl) return;
+
+          trackEl.classList.add('dragging');
+          // Subtle resistance damping so dragging feels tactile and grounded
+          const dampedDx = dx * 0.85;
+          const opacity = 1 - Math.min(Math.abs(dx) / 900, 0.22);
+          trackEl.style.transform = `translateX(${dampedDx.toFixed(1)}px)`;
+          trackEl.style.opacity = opacity.toFixed(3);
+
+          // Nudge the directional navigation button corresponding to the swipe direction
+          const prevBtn = document.getElementById('prevSlideBtn');
+          const nextBtn = document.getElementById('nextSlideBtn');
+          if (prevBtn && nextBtn) {
+            prevBtn.classList.toggle('edge-nudge-left', dx > 18);
+            nextBtn.classList.toggle('edge-nudge-right', dx < -18);
+          }
+        }
+
+        function snapBackToRest() {
+          const trackEl = document.getElementById('spotlightCarouselTrack');
+          clearEdgeNudges();
+          if (!trackEl) return;
+          trackEl.classList.remove('dragging');
+          trackEl.style.transform = 'translateX(0px)';
+          trackEl.style.opacity = '1';
+        }
+
+        function beginGesture(x, y) {
+          const items = getFilteredSpotlightItems();
+          if (items.length <= 1) return;
+
+          startX = x;
+          startY = y;
+          startTime = performance.now();
+          currentDeltaX = 0;
+          isTracking = true;
+          isHorizontalSwipe = null;
+          suppressSlideClick = false;
+        }
+
+        function updateGesture(x, y, nativeEvent) {
+          if (!isTracking) return;
+
+          const dx = x - startX;
+          const dy = y - startY;
+
+          // Lock axis once movement exceeds 8px threshold
+          if (isHorizontalSwipe === null) {
+            if (Math.abs(dx) < 8 && Math.abs(dy) < 8) {
+              return;
+            }
+            isHorizontalSwipe = Math.abs(dx) > Math.abs(dy);
+            if (!isHorizontalSwipe) {
+              // User is scrolling vertically; abort swipe tracking so page scroll is unobstructed
+              isTracking = false;
+              return;
+            }
+            stageEl.classList.add('is-dragging');
+            suppressSlideClick = true;
+          }
+
+          if (isHorizontalSwipe) {
+            if (nativeEvent && nativeEvent.cancelable) {
+              nativeEvent.preventDefault();
+            }
+            currentDeltaX = dx;
+            applyDragTransform(dx);
+          }
+        }
+
+        function finishGesture() {
+          if (!isTracking && isHorizontalSwipe !== true) {
+            clearEdgeNudges();
+            return;
+          }
+
+          const wasHorizontal = isHorizontalSwipe === true;
+          const dx = currentDeltaX;
+          const elapsedMs = Math.max(performance.now() - startTime, 1);
+          const velocity = Math.abs(dx) / elapsedMs;
+
+          isTracking = false;
+          isHorizontalSwipe = null;
+          stageEl.classList.remove('is-dragging');
+          clearEdgeNudges();
+
+          if (wasHorizontal) {
+            // Keep click suppressed briefly so synthetic click event after pointer/touch release doesn't open modal
+            suppressSlideClick = true;
+            setTimeout(() => {
+              suppressSlideClick = false;
+            }, 120);
+
+            if (Math.abs(dx) > 48 || (Math.abs(dx) > 24 && velocity > 0.35)) {
+              if (dx < 0) {
+                nextSpotlightSlide('swipe');
+              } else {
+                prevSpotlightSlide('swipe');
+              }
+              return;
+            }
+          }
+
+          snapBackToRest();
+        }
+
+        // Touch Events (Mobile & Tablet)
+        stageEl.addEventListener(
+          'touchstart',
+          (e) => {
+            if (e.touches.length !== 1) return;
+            const t = e.touches[0];
+            beginGesture(t.clientX, t.clientY);
+          },
+          { passive: true }
+        );
+
+        stageEl.addEventListener(
+          'touchmove',
+          (e) => {
+            if (!isTracking || e.touches.length !== 1) return;
+            const t = e.touches[0];
+            updateGesture(t.clientX, t.clientY, e);
+          },
+          { passive: false }
+        );
+
+        stageEl.addEventListener('touchend', finishGesture, { passive: true });
+        stageEl.addEventListener('touchcancel', () => {
+          isTracking = false;
+          isHorizontalSwipe = null;
+          stageEl.classList.remove('is-dragging');
+          snapBackToRest();
+        });
+
+        // Mouse / Pointer Drag Events (Desktop & Touchscreen Emulation)
+        stageEl.addEventListener('mousedown', (e) => {
+          if (e.button !== 0) return;
+          beginGesture(e.clientX, e.clientY);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isTracking) return;
+          updateGesture(e.clientX, e.clientY, e);
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (!isTracking && isHorizontalSwipe !== true) return;
+          finishGesture();
+        });
+
+        // Suppress accidental click navigation inside carousel when user dragged horizontally
+        stageEl.addEventListener(
+          'click',
+          (e) => {
+            if (suppressSlideClick) {
+              e.stopPropagation();
+              e.preventDefault();
+              suppressSlideClick = false;
+            }
+          },
+          true
+        );
+      } catch (err) {
+        console.error('Spotlight swipe init error:', err);
       }
     }
 
@@ -2641,7 +3200,9 @@
         renderFireflyJar();
         renderCapabilitySpotlight();
         selectEvolutionStage(4);
-        renderSpotlightCarousel();
+        initEvolutionSwipe();
+        renderSpotlightCarousel('none');
+        initSpotlightSwipe();
         syncAllFeeds(false);
         animateButterflyVertical();
         setInterval(emitButterflySparkle, 950);
